@@ -22,7 +22,7 @@ PGDATABASE=dev_database_name
 PGDATABASE=test_database_name
 ```
 
-Replace `nc_news` and `nc_news_test` with your actual local database names if they are different.
+Ensure you replace these names with your database names.
 
 Make sure these files are **not** committed to version control (they are already included in `.gitignore`).
 
