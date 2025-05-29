@@ -14,12 +14,12 @@ Each file should contain a single line specifying the relevant database name. Fo
 
 **.env.development**
 ```
-PGDATABASE=nc_news
+PGDATABASE=dev_database_name
 ```
 
 **.env.test**
 ```
-PGDATABASE=nc_news_test
+PGDATABASE=test_database_name
 ```
 
 Replace `nc_news` and `nc_news_test` with your actual local database names if they are different.
