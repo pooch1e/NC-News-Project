@@ -78,24 +78,28 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
     await db.query(sqlStringArticleData);
 
     // comments
-    const formattedComments = commentData.map((article) => {
-      // retreive article_ID
-      const convertedCommentWithID = getArticleId(article);
+    const formattedComments = await Promise.all(
+      commentData.map(async (comment) => {
+        // retreive article_ID
+        const convertedCommentWithID = await getArticleId(comment);
 
-      // convert to new object with timestamp
-      const convertedComments = convertTimestampToDate(convertedCommentWithID);
-
-      return [
-        convertedComments.article_id,
-        convertedCommentWithID.body,
-        convertedCommentWithID.votes,
-        convertedCommentWithID.author,
-        convertedCommentWithID.created_at,
-      ];
-    });
-
+        // convert to new object with timestamp
+        const convertedComments = convertTimestampToDate(
+          convertedCommentWithID
+        );
+        console.log(convertedComments);
+        return [
+          convertedComments.article_id,
+          convertedComments.body,
+          convertedComments.votes,
+          convertedComments.author,
+          convertedComments.created_at,
+        ];
+      })
+    );
+    console.log(formattedComments);
     const sqlStringComments = format(
-      `INSERT INTO comments (article_id, body, votes, author, created_at) VALUES %L`,
+      `INSERT INTO comments (article_ID, body, votes, author, created_at) VALUES %L`,
       formattedComments
     );
     await db.query(sqlStringComments);
