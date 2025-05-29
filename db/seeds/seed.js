@@ -38,7 +38,6 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
     const formattedTopics = topicData.map(({ description, slug, img_url }) => {
       return [slug, description, img_url];
     });
-    // console.log(formattedTopics);
 
     const sqlStringInsertTopics = format(
       `INSERT INTO topics (slug, description, img_url) VALUES %L`,
@@ -47,11 +46,11 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
     await db.query(sqlStringInsertTopics);
 
     // users
-    // console.log({ userData });
+
     const formattedUsers = userData.map(({ username, name, avatar_url }) => {
       return [username, name, avatar_url];
     });
-    // console.log(formattedUsers);
+
     const sqlStringUserData = format(
       `INSERT INTO users (username, name, avatar_url) VALUES %L`,
       formattedUsers
@@ -71,7 +70,7 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
         converted.article_img_url,
       ];
     });
-    console.log(formattedArticles);
+
     const sqlStringArticleData = format(
       `INSERT INTO articles (title, topic, author, body, created_at, votes, article_img_url) VALUES %L`,
       formattedArticles
@@ -80,25 +79,25 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 
     // comments
     const formattedComments = commentData.map((article) => {
-      
+      // retreive article_ID
       const convertedCommentWithID = getArticleId(article);
 
       // convert to new object with timestamp
       const convertedComments = convertTimestampToDate(convertedCommentWithID);
 
-      // need util function to compare article title in comments object -> article title in article data and return ID
       return [
         convertedComments.article_id,
         convertedCommentWithID.body,
         convertedCommentWithID.votes,
         convertedCommentWithID.author,
         convertedCommentWithID.created_at,
-
-      ]
-      
+      ];
     });
-    // console.log(formattedComments);
-    const sqlStringComments = format(`INSERT INTO comments (article_id, body, votes, author, created_at) VALUES %L`, formattedComments);
+
+    const sqlStringComments = format(
+      `INSERT INTO comments (article_id, body, votes, author, created_at) VALUES %L`,
+      formattedComments
+    );
     await db.query(sqlStringComments);
   } catch (err) {
     throw err;
