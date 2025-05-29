@@ -1,3 +1,4 @@
+const db = require('../db/connection');
 const { convertTimestampToDate, getArticleId } = require('../db/seeds/utils');
 
 describe('convertTimestampToDate', () => {
@@ -80,4 +81,8 @@ describe('getArticleId', () => {
     getArticleId(input)
     expect(input).toEqual(copyOfInput);
   });
+});
+
+afterAll(async () => {
+  await db.end();
 });
