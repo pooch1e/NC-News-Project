@@ -38,7 +38,7 @@ describe('convertTimestampToDate', () => {
 });
 
 describe('getArticleId', () => {
-  test('returns a new object', () => {
+  test('returns a new object', async () => {
     const input = {
       article_title: 'Living in the shadow of a great man',
       body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.',
@@ -46,9 +46,9 @@ describe('getArticleId', () => {
       author: 'butter_bridge',
       created_at: '2020-07-21T01:20:00.000Z',
     };
-    const result = getArticleId(input);
+    const result = await getArticleId(input);
     expect(result).not.toBe(input);
-    expect(result).toBeObject();
+    expect(typeof result).toBe('object');
   });
   test('when passed a title, selects correct article', async () => {
     const input = {
@@ -69,7 +69,7 @@ describe('getArticleId', () => {
     const result = await getArticleId(input);
     expect(result).toEqual(expected);
   });
-  test('does not mutate input', () => {
+  test('does not mutate input', async () => {
     const input = {
       article_title: 'Living in the shadow of a great man',
       body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.',
@@ -78,7 +78,7 @@ describe('getArticleId', () => {
       created_at: '2020-07-21T01:20:00.000Z',
     };
     const copyOfInput = {...input}
-    getArticleId(input)
+    await getArticleId(input)
     expect(input).toEqual(copyOfInput);
   });
 });

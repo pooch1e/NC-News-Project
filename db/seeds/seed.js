@@ -46,7 +46,6 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
     await db.query(sqlStringInsertTopics);
 
     // users
-
     const formattedUsers = userData.map(({ username, name, avatar_url }) => {
       return [username, name, avatar_url];
     });
