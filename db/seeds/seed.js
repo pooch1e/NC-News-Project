@@ -1,6 +1,10 @@
 const db = require('../connection');
 const format = require('pg-format');
-const { convertTimestampToDate, getArticleId } = require('../seeds/utils');
+const {
+  convertTimestampToDate,
+  getArticleId,
+  getValueFromKey,
+} = require('../seeds/utils');
 
 const seed = async ({ topicData, userData, articleData, commentData }) => {
   try {
@@ -72,39 +76,65 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
         converted.article_img_url,
       ];
     });
-
+    // console.log(formattedArticles, 'articles');
     const sqlStringArticleData = format(
-      `INSERT INTO articles (title, topic, author, body, created_at, votes, article_img_url) VALUES %L`,
+      `INSERT INTO articles (title, topic, author, body, created_at, votes, article_img_url) VALUES %L RETURNING *`,
       formattedArticles
     );
-    await db.query(sqlStringArticleData);
+    const returnedArticles = await db.query(sqlStringArticleData);
 
+    // console.log(returnedArticles);
     // comments
-    const formattedComments = await Promise.all(
-      commentData.map(async (comment) => {
-        // retreive article_ID
-        const convertedCommentWithID = await getArticleId(comment);
 
-        // convert to new object with timestamp
-        const convertedComments = convertTimestampToDate(
-          convertedCommentWithID
-        );
-        console.log(convertedComments);
-        return [
-          convertedComments.article_id,
-          convertedComments.body,
-          convertedComments.votes,
-          convertedComments.author,
-          convertedComments.created_at,
-        ];
-      })
-    );
-    console.log(formattedComments);
+    //! CREATE look up object from Articles
+    const returnedArticle_id = getValueFromKey(returnedArticles.rows, 'title', 'article_id');
+
+    const formattedComments = commentData.map(({ article_title, body, votes, author, created_at }) => {
+      // correct Timestamp
+      const convertedTimestamp = convertTimestampToDate({ article_title, body, votes, author, created_at })
+
+      // use Look Up Object
+      const getArticleId = returnedArticle_id[article_title]
+      // console.log(getArticleId, 'this is the article id object');
+      return [
+        getArticleId,
+        convertedTimestamp.body,
+        convertedTimestamp.votes,
+        convertedTimestamp.author,
+        convertedTimestamp.created_at
+        
+      ];
+    });
+
     const sqlStringComments = format(
       `INSERT INTO comments (article_ID, body, votes, author, created_at) VALUES %L`,
       formattedComments
     );
     await db.query(sqlStringComments);
+
+    // console.log(formattedComments);
+
+    // const formattedComments = await Promise.all(
+    //   commentData.map(async (comment) => {
+    //     // retreive article_ID
+    //     const convertedCommentWithID = await getArticleId(comment);
+
+    //     // convert to new object with timestamp
+    //     const convertedComments = convertTimestampToDate(
+    //       convertedCommentWithID
+    //     );
+    //     // console.log(convertedComments);
+    //     return [
+    //       convertedComments.article_id,
+    //       convertedComments.body,
+    //       convertedComments.votes,
+    //       convertedComments.author,
+    //       convertedComments.created_at,
+    //     ];
+    //   })
+    // );
+    // console.log(formattedComments);
+    
   } catch (err) {
     throw err;
   }

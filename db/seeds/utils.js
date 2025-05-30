@@ -25,13 +25,15 @@ exports.getArticleId = async ({ article_title, ...other_properties }) => {
     throw err;
   }
 };
-
+// ! rewrite this
 exports.getValueFromKey = (arr, key, value) => {
   if (arr.length === 0) return {};
 
-  return arr.filter((obj) => {
-    return obj[key] === value;
-  });
+
+  return arr.reduce((acc, curr) => {
+    acc[curr[key]] = curr[value];
+    return acc;
+  }, {});
 };
 
 // function responds with an object to reference a key from an array of objects to get the corresponding values
