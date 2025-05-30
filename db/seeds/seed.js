@@ -17,31 +17,31 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 
     // ----- CREATE TABLES
 
-    // topics
+    // Topics
     await db.query(
       `CREATE TABLE IF NOT EXISTS topics (slug VARCHAR(80) PRIMARY KEY NOT NULL, description VARCHAR(400), img_url VARCHAR(1000))`
     );
 
-    // users
+    // Users
     await db.query(
       `CREATE TABLE IF NOT EXISTS users (username VARCHAR PRIMARY KEY NOT NULL, name VARCHAR(100), avatar_url VARCHAR(1000))`
     );
 
-    // articles
+    //User_topics_Junction
+
+    // Articles
     await db.query(
       `CREATE TABLE IF NOT EXISTS articles (article_id SERIAL PRIMARY KEY, title VARCHAR(100), topic VARCHAR(100) REFERENCES topics(slug), author VARCHAR(80) REFERENCES users(username), body TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, votes INT DEFAULT 0, article_img_url VARCHAR(1000))`
     );
 
-    //user topics?
-
-    // comments
+    // Comments
     await db.query(
       `CREATE TABLE IF NOT EXISTS comments (comment_id SERIAL PRIMARY KEY, article_ID INT REFERENCES articles(article_id), body TEXT, votes INT DEFAULT 0, author VARCHAR(100) REFERENCES users(username), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )`
     );
 
     // ----- INSERT DATA
 
-    // topics
+    // Topics
     const formattedTopics = topicData.map(({ description, slug, img_url }) => {
       return [slug, description, img_url];
     });
@@ -52,7 +52,7 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
     );
     await db.query(sqlStringInsertTopics);
 
-    // users
+    // Users
     const formattedUsers = userData.map(({ username, name, avatar_url }) => {
       return [username, name, avatar_url];
     });
@@ -63,7 +63,9 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
     );
     await db.query(sqlStringUserData);
 
-    // articles
+    // User Topics
+
+    // Articles
     const formattedArticles = articleData.map((article) => {
       const converted = convertTimestampToDate(article);
       return [
@@ -76,14 +78,14 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
         converted.article_img_url,
       ];
     });
-    // console.log(formattedArticles, 'articles');
+    
     const sqlStringArticleData = format(
       `INSERT INTO articles (title, topic, author, body, created_at, votes, article_img_url) VALUES %L RETURNING *`,
       formattedArticles
     );
     const returnedArticles = await db.query(sqlStringArticleData);
 
-    // comments
+    // Comments
 
     //! CREATE look up object from Articles
     const returnedArticle_id = getValueFromKey(
@@ -94,7 +96,7 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 
     const formattedComments = commentData.map(
       ({ article_title, body, votes, author, created_at }) => {
-        // correct Timestamp
+        // Correct Timestamp
         const convertedTimestamp = convertTimestampToDate({
           article_title,
           body,
@@ -103,9 +105,9 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
           created_at,
         });
 
-        // use Look Up Object
+        // Use Look Up Object
         const getArticleId = returnedArticle_id[article_title];
-        // console.log(getArticleId, 'this is the article id object');
+        
         return [
           getArticleId,
           convertedTimestamp.body,
