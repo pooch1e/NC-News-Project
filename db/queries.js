@@ -68,12 +68,22 @@ const db = require('./connection');
 //   });
 
 // try a join
-db.query(
-  `SELECT user_topics.username, user_topics.topic FROM user_topics JOIN ON user_topics.username = users.username JOIN topics ON user_topics.topic = topics.slug`
-)
-  .then(({ rows }) => {
-    console.log(rows);
-  })
-  .catch((err) => {
-    return err;
-  });
+// db.query(
+//   `SELECT user_topics.username, user_topics.topic FROM user_topics JOIN ON user_topics.username = users.username JOIN topics ON user_topics.topic = topics.slug`
+// )
+//   .then(({ rows }) => {
+//     console.log(rows);
+//   })
+//   .catch((err) => {
+//     return err;
+//   });
+// User Article Votes
+// Test user_article votes worked correctly
+// db.query(`SELECT * FROM user_article_votes`)
+//   .then(({ rows }) => {
+//     console.log(rows);
+//   })
+//   .catch((err) => {
+//     return err;
+//   });
+

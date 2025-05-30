@@ -119,7 +119,7 @@ const seed = async ({
     );
     await db.query(sqlUserArticleVotes);
     console.log('injected test');
-
+    console.log('inserted userarticleVotes correctly')
     // Comments
 
     //! CREATE look up object from Articles
