@@ -10,7 +10,7 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
   try {
     // ----- DROP TABLES
     await db.query(`DROP TABLE IF EXISTS comments`);
-    // user topics?
+    await db.query(`DROP TABLE IF EXISTS user_topics`);
     await db.query(`DROP TABLE IF EXISTS articles`);
     await db.query(`DROP TABLE IF EXISTS users`);
     await db.query(`DROP TABLE IF EXISTS topics`);
@@ -27,7 +27,10 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
       `CREATE TABLE IF NOT EXISTS users (username VARCHAR PRIMARY KEY NOT NULL, name VARCHAR(100), avatar_url VARCHAR(1000))`
     );
 
-    //User_topics_Junction
+    //User_Topics_Junction
+    await db.query(
+      `CREATE TABLE IF NOT EXISTS user_topics (user_topics_id SERIAL PRIMARY KEY NOT NULL, username VARCHAR REFERENCES users(username) ON DELETE CASCADE, topic VARCHAR REFERENCES topics(slug) ON DELETE CASCADE, UNIQUE (username, topic))`
+    );
 
     // Articles
     await db.query(
