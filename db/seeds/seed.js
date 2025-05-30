@@ -16,6 +16,7 @@ const seed = async ({
   try {
     // ----- DROP TABLES
     await db.query(`DROP TABLE IF EXISTS comments`);
+    await db.query(`DROP TABLE IF EXISTS user_article_votes`);
     await db.query(`DROP TABLE IF EXISTS user_topics`);
     await db.query(`DROP TABLE IF EXISTS articles`);
     await db.query(`DROP TABLE IF EXISTS users`);
@@ -43,6 +44,10 @@ const seed = async ({
       `CREATE TABLE IF NOT EXISTS articles (article_id SERIAL PRIMARY KEY, title VARCHAR(100), topic VARCHAR(100) REFERENCES topics(slug), author VARCHAR(80) REFERENCES users(username), body TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, votes INT DEFAULT 0, article_img_url VARCHAR(1000))`
     );
 
+    // User_Article_Votes
+    await db.query(
+      `CREATE TABLE IF NOT EXISTS user_article_votes (user_article_votes_id SERIAL PRIMARY KEY NOT NULL, username VARCHAR REFERENCES users(username) ON DELETE CASCADE, article_id INT REFERENCES articles(article_id) ON DELETE CASCADE, vote_count INT NOT NULL)`
+    );
     // Comments
     await db.query(
       `CREATE TABLE IF NOT EXISTS comments (comment_id SERIAL PRIMARY KEY, article_ID INT REFERENCES articles(article_id), body TEXT, votes INT DEFAULT 0, author VARCHAR(100) REFERENCES users(username), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )`

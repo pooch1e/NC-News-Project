@@ -428,6 +428,82 @@ describe('seed', () => {
         });
     });
   });
+  
+describe('user_article_votes table', () => {
+  test('user_article_votes table exists', () => {
+    return db
+      .query(
+        `SELECT EXISTS (
+          SELECT FROM 
+              information_schema.tables 
+          WHERE 
+              table_name = 'user_article_votes'
+          );`
+      )
+      .then(({ rows: [{ exists }] }) => {
+        expect(exists).toBe(true);
+      });
+  });
+
+  test('user_article_votes table has user_article_votes_id column with a primary key of serial', () => {
+    return db
+      .query(
+        `SELECT column_name, data_type, column_default
+          FROM information_schema.columns
+          WHERE table_name = 'user_article_votes'
+          AND column_name = 'user_article_votes_id';`
+      )
+      .then(({ rows: [column] }) => {
+        expect(column.column_name).toBe('user_article_votes_id');
+        expect(column.data_type).toBe('integer');
+        expect(column.column_default).toMatch(/nextval/);
+      });
+  });
+
+  test('user_article_votes table has username column of varying character', () => {
+    return db
+      .query(
+        `SELECT column_name, data_type
+          FROM information_schema.columns
+          WHERE table_name = 'user_article_votes'
+          AND column_name = 'username';`
+      )
+      .then(({ rows: [column] }) => {
+        expect(column.column_name).toBe('username');
+        expect(column.data_type).toBe('character varying');
+      });
+  });
+
+  test('user_article_votes table has article_id column as integer', () => {
+    return db
+      .query(
+        `SELECT column_name, data_type
+          FROM information_schema.columns
+          WHERE table_name = 'user_article_votes'
+          AND column_name = 'article_id';`
+      )
+      .then(({ rows: [column] }) => {
+        expect(column.column_name).toBe('article_id');
+        expect(column.data_type).toBe('integer');
+      });
+  });
+
+  test('user_article_votes table has vote_count column as integer and not null', () => {
+    return db
+      .query(
+        `SELECT column_name, data_type, is_nullable
+          FROM information_schema.columns
+          WHERE table_name = 'user_article_votes'
+          AND column_name = 'vote_count';`
+      )
+      .then(({ rows: [column] }) => {
+        expect(column.column_name).toBe('vote_count');
+        expect(column.data_type).toBe('integer');
+        expect(column.is_nullable).toBe('NO');
+      });
+  });
+});
+
 
   describe('comments table', () => {
     test('comments table exists', () => {
