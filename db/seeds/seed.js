@@ -1,17 +1,14 @@
 const db = require('../connection');
 const format = require('pg-format');
-const {
-  convertTimestampToDate,
-  getArticleId,
-  getValueFromKey,
-} = require('../seeds/utils');
+const { convertTimestampToDate, getValueFromKey } = require('../seeds/utils');
 
 const seed = async ({
   topicData,
   userData,
   articleData,
-  commentData,
   userTopics,
+  userArticleVotes,
+  commentData,
 }) => {
   try {
     // ----- DROP TABLES
@@ -43,7 +40,6 @@ const seed = async ({
     await db.query(
       `CREATE TABLE IF NOT EXISTS articles (article_id SERIAL PRIMARY KEY, title VARCHAR(100), topic VARCHAR(100) REFERENCES topics(slug), author VARCHAR(80) REFERENCES users(username), body TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, votes INT DEFAULT 0, article_img_url VARCHAR(1000))`
     );
-
     // User_Article_Votes
     await db.query(
       `CREATE TABLE IF NOT EXISTS user_article_votes (user_article_votes_id SERIAL PRIMARY KEY NOT NULL, username VARCHAR REFERENCES users(username) ON DELETE CASCADE, article_id INT REFERENCES articles(article_id) ON DELETE CASCADE, vote_count INT NOT NULL)`
@@ -88,7 +84,7 @@ const seed = async ({
       formattedUserTopics
     );
     await db.query(sqlStringUserTopics);
-    console.log('topic added succesfully');
+    // console.log('topic added succesfully');
 
     // Articles
     const formattedArticles = articleData.map((article) => {
@@ -109,6 +105,20 @@ const seed = async ({
       formattedArticles
     );
     const returnedArticles = await db.query(sqlStringArticleData);
+
+    // User Article Votes
+    const formattedUserArticleVotes = userArticleVotes.map(
+      ({ username, article_id, vote_count }) => {
+        return [username, article_id, vote_count];
+      }
+    );
+    console.log(formattedUserArticleVotes, 'mapped article votes');
+    const sqlUserArticleVotes = format(
+      `INSERT INTO user_article_votes (username, article_id, vote_count) VALUES %L`,
+      formattedUserArticleVotes
+    );
+    await db.query(sqlUserArticleVotes);
+    console.log('injected test');
 
     // Comments
 
