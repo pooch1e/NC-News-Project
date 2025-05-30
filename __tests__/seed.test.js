@@ -642,6 +642,17 @@ describe('data insertion', () => {
     });
   });
 
+    test('user_topics data has been inserted correctly', () => {
+    return db.query(`SELECT * FROM user_topics;`).then(({ rows: user_topics }) => {
+      expect(user_topics).toHaveLength(8);
+      user_topics.forEach((user) => {
+        expect(user).toHaveProperty('user_topics_id');
+        expect(user).toHaveProperty('username');
+        expect(user).toHaveProperty('topic');
+      });
+    });
+  });
+
   test('articles data has been inserted correctly', () => {
     return db.query(`SELECT * FROM articles;`).then(({ rows: articles }) => {
       expect(articles).toHaveLength(13);
