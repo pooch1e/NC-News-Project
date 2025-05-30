@@ -50,7 +50,27 @@ const db = require('./connection');
 
 // Get all of the comments that have more than 10 votes.
 
-db.query(`SELECT * FROM comments WHERE votes > 10`)
+// db.query(`SELECT * FROM comments WHERE votes > 10`)
+//   .then(({ rows }) => {
+//     console.log(rows);
+//   })
+//   .catch((err) => {
+//     return err;
+//   });
+
+// Test user_topics Junction worked correctly
+// db.query(`SELECT * FROM user_topics`)
+//   .then(({ rows }) => {
+//     console.log(rows);
+//   })
+//   .catch((err) => {
+//     return err;
+//   });
+
+// try a join
+db.query(
+  `SELECT user_topics.username, user_topics.topic FROM user_topics JOIN ON user_topics.username = users.username JOIN topics ON user_topics.topic = topics.slug`
+)
   .then(({ rows }) => {
     console.log(rows);
   })
