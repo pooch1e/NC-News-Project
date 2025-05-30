@@ -13,3 +13,5 @@ const user_topics = [
   { username: 'lurker', topic: 'cats' },
   { username: 'rogersop', topic: 'mitch' }
 ];
+
+module.exports = user_topics;

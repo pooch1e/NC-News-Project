@@ -6,7 +6,13 @@ const {
   getValueFromKey,
 } = require('../seeds/utils');
 
-const seed = async ({ topicData, userData, articleData, commentData }) => {
+const seed = async ({
+  topicData,
+  userData,
+  articleData,
+  commentData,
+  userTopics,
+}) => {
   try {
     // ----- DROP TABLES
     await db.query(`DROP TABLE IF EXISTS comments`);
@@ -68,6 +74,17 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 
     // User Topics
 
+    const formattedUserTopics = userTopics.map(({ username, topic }) => {
+      return [username, topic];
+    });
+    console.log(formattedUserTopics);
+    const sqlStringUserTopics = format(
+      `INSERT INTO user_topics (username, topic) VALUES %L`,
+      formattedUserTopics
+    );
+    await db.query(sqlStringUserTopics);
+    console.log('topic added succesfully');
+
     // Articles
     const formattedArticles = articleData.map((article) => {
       const converted = convertTimestampToDate(article);
@@ -81,7 +98,7 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
         converted.article_img_url,
       ];
     });
-    
+
     const sqlStringArticleData = format(
       `INSERT INTO articles (title, topic, author, body, created_at, votes, article_img_url) VALUES %L RETURNING *`,
       formattedArticles
@@ -110,7 +127,7 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
 
         // Use Look Up Object
         const getArticleId = returnedArticle_id[article_title];
-        
+
         return [
           getArticleId,
           convertedTimestamp.body,
