@@ -27,7 +27,7 @@ describe('GET /api', () => {
       });
   });
 });
-describe('GET .api/topics', () => {
+describe.only('GET .api/topics', () => {
   test('200: Responds with an object detailing all topics', () => {
     return request(app)
     .get('/api/topics')
