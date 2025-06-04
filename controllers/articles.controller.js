@@ -1,5 +1,5 @@
 //articles.controller
-const { fetchArticles } = require('../models/index.models');
+const {fetchArticles} = require('../models/index.models');
 
 const getArticles = (req, res) => {
   console.log('hello from getArticles.controller');

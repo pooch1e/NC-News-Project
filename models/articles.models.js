@@ -9,4 +9,4 @@ const fetchArticles = () => {
   });
 };
 
-module.exports = {fetchArticles};
+module.exports = fetchArticles;
