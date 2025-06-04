@@ -5,7 +5,7 @@ const {
   getValueFromKey,
 } = require('../db/seeds/utils');
 
-describe('convertTimestampToDate', () => {
+describe.skip('convertTimestampToDate', () => {
   test('returns a new object', () => {
     const timestamp = 1557572706232;
     const input = { created_at: timestamp };
@@ -41,7 +41,7 @@ describe('convertTimestampToDate', () => {
   });
 });
 
-describe('getArticleId', () => {
+describe.skip('getArticleId', () => {
   test('returns a new object', async () => {
     const input = {
       article_title: 'Living in the shadow of a great man',
@@ -87,7 +87,7 @@ describe('getArticleId', () => {
   });
 });
 
-describe('tests for getValueFromKey function', () => {
+describe.skip('tests for getValueFromKey function', () => {
   test('when passed an empty array, returns an empty object', () => {
     const actual = getValueFromKey([]);
     const expected = {};

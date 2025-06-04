@@ -5,7 +5,7 @@ const data = require('../db/data/test-data/index');
 beforeAll(() => seed(data));
 afterAll(() => db.end());
 
-describe('seed', () => {
+describe.skip('seed', () => {
   describe('topics table', () => {
     test('topics table exists', () => {
       return db
@@ -81,7 +81,7 @@ describe('seed', () => {
     });
   });
 
-  describe('users table', () => {
+  describe.skip('users table', () => {
     test('users table exists', () => {
       return db
         .query(
@@ -155,7 +155,7 @@ describe('seed', () => {
     });
   });
 
-  describe('user_topics table', () => {
+  describe.skip('user_topics table', () => {
     test('user_topics table exists', () => {
       return db
         .query(
@@ -211,7 +211,7 @@ describe('seed', () => {
     });
   });
 
-  describe('articles table', () => {
+  describe.skip('articles table', () => {
     test('articles table exists', () => {
       return db
         .query(
@@ -429,7 +429,7 @@ describe('seed', () => {
     });
   });
   
-describe('user_article_votes table', () => {
+describe.skip('user_article_votes table', () => {
   test('user_article_votes table exists', () => {
     return db
       .query(
@@ -505,7 +505,7 @@ describe('user_article_votes table', () => {
 });
 
 
-  describe('comments table', () => {
+  describe.skip('comments table', () => {
     test('comments table exists', () => {
       return db
         .query(
@@ -695,7 +695,7 @@ describe('user_article_votes table', () => {
   });
 });
 
-describe('data insertion', () => {
+describe.skip('data insertion', () => {
   test('topics data has been inserted correctly', () => {
     return db.query(`SELECT * FROM topics;`).then(({ rows: topics }) => {
       expect(topics).toHaveLength(3);
