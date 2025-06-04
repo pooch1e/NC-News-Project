@@ -23,6 +23,7 @@ app.get('/api/topics', getTopics);
 // GET /articles
 app.get('/api/articles', getArticles);
 
+// TODO add error management
 // GET /api/articles/:article_id
 app.get('/api/articles/:article_id', getArticleById);
 
