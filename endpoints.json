@@ -25,5 +25,17 @@
         }
       ]
     }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users",
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "pookie1",
+          "name": "Blumpf Barton",
+          "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
+        }
+      ]
+    }
   }
 }
