@@ -86,3 +86,11 @@ const db = require('./connection');
 //   .catch((err) => {
 //     return err;
 //   });
+
+// db.query(`SELECT * FROM articles`)
+//   .then(({ rows }) => {
+//     console.log(rows);
+//   })
+//   .catch((err) => {
+//     return err;
+//   });
