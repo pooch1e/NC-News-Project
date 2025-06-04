@@ -27,7 +27,7 @@ describe('GET /api', () => {
       });
   });
 });
-describe.only('GET .api/topics', () => {
+describe('GET api/topics', () => {
   test('200: Responds with an object detailing all topics', () => {
     return request(app)
     .get('/api/topics')
@@ -41,3 +41,14 @@ describe.only('GET .api/topics', () => {
     })
   })
 })
+
+// describe('GET api/articles', () => {
+//   test('200: Responds with an object with the key of articles and the value of an array of article objects', () => {
+//     return request(app)
+//     .get('/api/articles')
+//     .expect(200)
+//     .then(({body}) => {
+//       console.log(body);
+//     })
+//   })
+// })
