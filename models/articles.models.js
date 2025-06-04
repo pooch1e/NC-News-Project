@@ -15,4 +15,16 @@ const fetchArticles = () => {
     });
 };
 
-module.exports = fetchArticles;
+const fetchArticleById = (id) => {
+  console.log('inside fetcharticle by ID');
+  return db
+    .query(
+      `SELECT article_id, title, topic, body, author,created_at, votes, article_img_url FROM articles WHERE article_id = $1`,
+      [id]
+    )
+    .then(({ rows }) => {
+      return rows;
+    });
+};
+
+module.exports = { fetchArticles, fetchArticleById };

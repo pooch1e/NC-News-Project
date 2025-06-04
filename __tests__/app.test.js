@@ -63,7 +63,28 @@ describe('GET api/articles', () => {
   });
 });
 
-describe.only('GET api/users', () => {
+describe('GET api/article/:article_id', () => {
+  test('200: Responds with an object with the key of article and the value of an article object', () => {
+    return request(app)
+      .get('/api/articles/1')
+      .expect(200)
+      .then(({ body: { articles } }) => {
+        expect(articles.length).not.toBe(0);
+        articles.forEach((article) => {
+          expect(typeof article.article_id).toBe('number');
+          expect(typeof article.title).toBe('string');
+          expect(typeof article.topic).toBe('string');
+          expect(typeof article.author).toBe('string');
+          expect(typeof article.body).toBe('string');
+          expect(typeof article.created_at).toBe('string');
+          expect(typeof article.votes).toBe('number');
+          expect(typeof article.article_img_url).toBe('string');
+        });
+      });
+  });
+});
+
+describe('GET api/users', () => {
   test('200: Responds with an object with the key of users and the value of an array of objects', () => {
     return request(app)
       .get('/api/users')
