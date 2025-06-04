@@ -1,7 +1,11 @@
 //topics controller
+const {fetchTopics} = require('../models/topics.models');
 
 const getTopics = (req, res) => {
-  console.log('hello from topics controller');
+  
+  fetchTopics().then((topics) => {
+    res.status(200).send({topics})
+  })
 
 }
 
