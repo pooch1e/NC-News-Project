@@ -1,5 +1,5 @@
 //topics controller
-const {fetchTopics} = require('../models/topics.models');
+const fetchTopics = require('../models/topics.models');
 
 const getTopics = (req, res) => {
   
