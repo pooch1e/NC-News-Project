@@ -86,4 +86,3 @@ const db = require('./connection');
 //   .catch((err) => {
 //     return err;
 //   });
-

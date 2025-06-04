@@ -74,17 +74,15 @@ const seed = async ({
     await db.query(sqlStringUserData);
 
     // User Topics
-
     const formattedUserTopics = userTopics.map(({ username, topic }) => {
       return [username, topic];
     });
-    console.log(formattedUserTopics);
+
     const sqlStringUserTopics = format(
       `INSERT INTO user_topics (username, topic) VALUES %L`,
       formattedUserTopics
     );
     await db.query(sqlStringUserTopics);
-    // console.log('topic added succesfully');
 
     // Articles
     const formattedArticles = articleData.map((article) => {
@@ -112,16 +110,14 @@ const seed = async ({
         return [username, article_id, vote_count];
       }
     );
-    console.log(formattedUserArticleVotes, 'mapped article votes');
+
     const sqlUserArticleVotes = format(
       `INSERT INTO user_article_votes (username, article_id, vote_count) VALUES %L`,
       formattedUserArticleVotes
     );
     await db.query(sqlUserArticleVotes);
-    console.log('injected test');
-    console.log('inserted userarticleVotes correctly')
-    // Comments
 
+    // Comments
     //! CREATE look up object from Articles
     const returnedArticle_id = getValueFromKey(
       returnedArticles.rows,
@@ -140,7 +136,6 @@ const seed = async ({
           created_at,
         });
 
-        // Use Look Up Object
         const getArticleId = returnedArticle_id[article_title];
 
         return [
