@@ -1,20 +1,23 @@
 //articles.controller
 const { fetchArticles, fetchArticleById } = require('../models/index.models');
 
-const getArticles = (req, res) => {
-  fetchArticles().then((articles) => {
+const getArticles = async (req, res) => {
+  try {
+    const articles = await fetchArticles();
     res.status(200).send({ articles });
-  });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const getArticleById = (req, res) => {
+const getArticleById = async (req, res) => {
   const { article_id } = req.params;
-
-  console.log(article_id);
-  console.log('hello from article ID');
-  fetchArticleById(article_id).then((articles) => {
+  try {
+    const articles = await fetchArticleById(article_id);
     res.status(200).send({ articles });
-  });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports = { getArticles, getArticleById };

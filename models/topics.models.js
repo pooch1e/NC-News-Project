@@ -1,11 +1,9 @@
 // topics.models.js
 const db = require('../db/connection');
 
-const fetchTopics = () => {
-  return db.query(`SELECT slug, description FROM topics;`).then(({ rows }) => {
-
-    return rows;
-  });
+const fetchTopics = async () => {
+  const { rows } = await db.query(`SELECT slug, description FROM topics;`);
+  return rows;
 };
 
 module.exports = fetchTopics;
