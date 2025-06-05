@@ -33,7 +33,6 @@ const getArticleById = async (req, res) => {
 };
 
 const patchArticleById = async (req, res) => {
-
   const { article_id } = req.params;
   const { inc_votes } = req.body; //typeof number
 
