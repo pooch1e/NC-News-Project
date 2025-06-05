@@ -18,6 +18,7 @@ const {
 const {
   handleServerError,
   handleCustomError,
+  handlePgErrors,
 } = require('./errors/index.errors');
 
 // --- HANDLE API ---
@@ -37,8 +38,14 @@ app.get('/api/articles/:article_id', getArticleById);
 // GET /users
 app.get('/api/users', getUsers);
 
+// Catch 404 - invalid route
+app.use((req, res, next) => {
+  next({ status: 404, msg: 'route not found' });
+});
+
 // ERROR HANDLING - must be in order
 app.use(handleCustomError);
+app.use(handlePgErrors);
 app.use(handleServerError);
 
 module.exports = app;
