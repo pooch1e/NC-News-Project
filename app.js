@@ -15,8 +15,12 @@ const {
 } = require('./controllers/index.controllers');
 
 // import error handling
-const { handleServerError } = require('./errors/index.errors');
+const {
+  handleServerError,
+  handleCustomError,
+} = require('./errors/index.errors');
 
+// --- HANDLE API ---
 // GET /api directory
 app.get('/api', getApi);
 
@@ -33,7 +37,8 @@ app.get('/api/articles/:article_id', getArticleById);
 // GET /users
 app.get('/api/users', getUsers);
 
-// ERROR HANDLING
+// ERROR HANDLING - must be in order
+app.use(handleCustomError);
 app.use(handleServerError);
 
 module.exports = app;
