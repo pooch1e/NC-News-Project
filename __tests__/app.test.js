@@ -21,7 +21,8 @@ describe('GET /api', () => {
     return request(app)
       .get('/api')
       .expect(200)
-      .then(({ body: { endpoints } }) => {
+      .then(({ body }) => {
+        const { endpoints } = body;
         expect(endpoints).toEqual(endpointsJson);
       });
   });
@@ -31,7 +32,8 @@ describe('GET api/topics', () => {
     return request(app)
       .get('/api/topics')
       .expect(200)
-      .then(({ body: { topics } }) => {
+      .then(({ body }) => {
+        const { topics } = body;
         expect(topics.length).not.toBe(0);
         topics.forEach((topic) => {
           expect(typeof topic.slug).toBe('string');
@@ -46,7 +48,8 @@ describe('GET api/articles', () => {
     return request(app)
       .get('/api/articles')
       .expect(200)
-      .then(({ body: { articles } }) => {
+      .then(({ body }) => {
+        const { articles } = body;
         expect(articles.length).not.toBe(0);
 
         articles.forEach((article) => {
@@ -68,7 +71,8 @@ describe('GET api/article/:article_id', () => {
     return request(app)
       .get('/api/articles/1')
       .expect(200)
-      .then(({ body: { articles } }) => {
+      .then(({ body }) => {
+        const { articles } = body;
         expect(articles.length).not.toBe(0);
         articles.forEach((article) => {
           expect(typeof article.article_id).toBe('number');
@@ -89,7 +93,8 @@ describe('GET api/users', () => {
     return request(app)
       .get('/api/users')
       .expect(200)
-      .then(({ body: { users } }) => {
+      .then(({ body }) => {
+        const { users } = body;
         expect(users.length).not.toBe(0);
 
         users.forEach((user) => {
