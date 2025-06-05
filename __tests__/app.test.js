@@ -120,6 +120,35 @@ describe('GET api/articles/:article_id/comments', () => {
   });
 });
 
+describe('Errors: /api/articles/:articleid/comments', () => {
+  describe('tests for PG errors', () => {
+    test('400: Responds with error for invalid article id format', () => {
+      return request(app)
+        .get('/api/articles/notanum/comments')
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe('invalid id');
+        });
+    });
+    test('404: Responds with error message for non existent comment id in database', () => {
+      return request(app)
+        .get('/api/articles/99999/comments')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('id not found');
+        });
+    });
+    test('404: Responds with error message for existing comment but empty id in database', () => {
+      return request(app)
+        .get('/api/articles/2/comments')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('id not found');
+        });
+    });
+  });
+});
+
 // Testing /api/article for errors
 describe('Errors: /api/articles', () => {
   test('400: Responds with error message for invalid article type', () => {
@@ -143,7 +172,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/999999')
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe('article not found');
+        expect(body.msg).toBe('id not found');
       });
   });
 });
