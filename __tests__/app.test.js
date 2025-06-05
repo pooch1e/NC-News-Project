@@ -260,6 +260,9 @@ describe('PATCH /api/articles/:article_id', () => {
       });
   });
 });
+
+//TODO write error tests for patch
+
 describe('GET api/users', () => {
   test('200: Responds with an object with the key of users and the value of an array of objects', () => {
     return request(app)
