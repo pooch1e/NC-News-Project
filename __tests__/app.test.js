@@ -130,6 +130,14 @@ describe('Errors: /api/articles/:articleid/comments', () => {
           expect(body.msg).toBe('invalid id');
         });
     });
+    test('404: Responds with error for blank article id', () => {
+      return request(app)
+      .get('/api/articles/%20/comments')
+      .expect(404)
+      .then(({body}) => {
+        expect(body.msg).toBe('id not found')
+      })
+    })
     test('404: Responds with error message for non existent comment id in database', () => {
       return request(app)
         .get('/api/articles/99999/comments')

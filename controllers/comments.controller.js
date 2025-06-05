@@ -2,6 +2,9 @@
 const { fetchCommentsById } = require('../models/index.models');
 
 const getCommentsByArticleId = async (req, res) => {
+  if (req.params.article_id === '') {
+    return res.status(400).send({status : 400, msg : 'invalid type'})
+  }
   const article_id = Number(req.params.article_id);
 
   try {
