@@ -1,9 +1,12 @@
 // comments controller.js
-const { fetchCommentsById } = require('../models/index.models');
+const {
+  fetchCommentsById,
+  insertCommentByArticleId,
+} = require('../models/index.models');
 
 const getCommentsByArticleId = async (req, res) => {
   if (req.params.article_id === '') {
-    return res.status(400).send({status : 400, msg : 'invalid type'})
+    return res.status(400).send({ status: 400, msg: 'invalid type' });
   }
   const article_id = Number(req.params.article_id);
 
@@ -25,4 +28,25 @@ const getCommentsByArticleId = async (req, res) => {
   }
 };
 
-module.exports = getCommentsByArticleId;
+const postCommentByArticleId = async (req, res) => {
+  // console.log('hello from post comment')
+  const { username, body } = req.body;
+  const { article_id } = req.params;
+
+  try {
+    const postedComment = await insertCommentByArticleId(
+      article_id,
+      username,
+      body
+    );
+    // console.log(postedComment, 'posted comment');
+    res.status(201).send({ postedComment });
+  } catch (err) {
+    if (err.code === '23503') {
+      // Foreign key violation
+      return Promise.reject({ status: 400, msg: 'Username does not exist' });
+    }
+  }
+};
+
+module.exports = { getCommentsByArticleId, postCommentByArticleId };
