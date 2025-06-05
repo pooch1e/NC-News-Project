@@ -239,7 +239,7 @@ describe('PATCH /api/articles/:article_id', () => {
         expect(updatedArticle.votes).toBe(101);
       });
   });
-  test('200 : Responds with the updated article', () => {
+  test('200 : Responds with the updated article when passed negative votes', () => {
     const newNegVotes = { inc_votes: -100 };
     return request(app)
       .patch('/api/articles/2')
@@ -260,6 +260,18 @@ describe('PATCH /api/articles/:article_id', () => {
       });
   });
 });
+
+describe('ERROR /api/articles/:article_id', () => {
+  test('404: Responds with error message for non existent article id in database', () => {
+      return request(app)
+        .patch('/api/articles/99999')
+        .send({inc_votes : 1})
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('Article not found');
+        });
+    });
+})
 
 //TODO write error tests for patch
 
