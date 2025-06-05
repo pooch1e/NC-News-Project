@@ -14,6 +14,9 @@ const {
   getUsers,
 } = require('./controllers/index.controllers');
 
+// import error handling
+const { handleServerError } = require('./errors/index.errors');
+
 // GET /api directory
 app.get('/api', getApi);
 
@@ -29,5 +32,8 @@ app.get('/api/articles/:article_id', getArticleById);
 
 // GET /users
 app.get('/api/users', getUsers);
+
+// ERROR HANDLING
+app.use(handleServerError);
 
 module.exports = app;
