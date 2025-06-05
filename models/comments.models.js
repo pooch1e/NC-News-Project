@@ -8,7 +8,7 @@ const fetchCommentsById = async (id) => {
     );
 
     if (rows.length === 0) {
-      throw new Error('No comments for this id');
+      throw new Error('id not found');
     }
 
     const sortedRows =  [...rows].sort((a, b) => {

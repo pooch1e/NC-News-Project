@@ -21,7 +21,7 @@ const getArticleById = async (req, res) => {
     const articles = await fetchArticleById(article_id);
     //db error or non-existent article id
     if (!isNaN(article_id) && articles.length === 0) {
-      return Promise.reject({status: 404, msg : 'article not found'
+      return Promise.reject({status: 404, msg : 'id not found'
       })
     }
     res.status(200).send({ articles });
