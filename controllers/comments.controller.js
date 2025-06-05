@@ -2,6 +2,7 @@
 const {
   fetchCommentsById,
   insertCommentByArticleId,
+  fetchArticleById,
 } = require('../models/index.models');
 
 const getCommentsByArticleId = async (req, res) => {
@@ -39,7 +40,7 @@ const postCommentByArticleId = async (req, res) => {
       username,
       body
     );
-    // console.log(postedComment, 'posted comment');
+
     res.status(201).send({ postedComment });
   } catch (err) {
     if (err.code === '23503') {

@@ -192,7 +192,7 @@ describe('POST /api/articles/:article_id/comments', () => {
       .send(newComment)
       .expect(201)
       .then(({ body }) => {
-        const {postedComment} = body;
+        const { postedComment } = body;
 
         expect(typeof postedComment.author).toBe('string');
         expect(typeof postedComment.body).toBe('string');
@@ -202,6 +202,21 @@ describe('POST /api/articles/:article_id/comments', () => {
   });
 });
 
+describe('ERRORS /api/articles/:article_id/comments', () => {
+  test('400: Responds with FK error if no author exists', () => {
+    const invalidComment = {
+      username: 'eric cartman',
+      body: 'invalid body, I do not exist',
+    };
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send(invalidComment)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Username does not exist');
+      });
+  });
+});
 describe('GET api/users', () => {
   test('200: Responds with an object with the key of users and the value of an array of objects', () => {
     return request(app)
