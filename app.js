@@ -12,6 +12,7 @@ const {
   getArticles,
   getArticleById,
   getCommentsByArticleId,
+  postCommentByArticleId,
   getUsers,
 } = require('./controllers/index.controllers');
 
@@ -37,6 +38,9 @@ app.get('/api/articles/:article_id', getArticleById);
 
 // GET /api/articles/:article_id/comments
 app.get('/api/articles/:article_id/comments', getCommentsByArticleId);
+
+// POST /api/articles/:article_id/comments
+app.post('/api/articles/:article_id/comments', postCommentByArticleId);
 
 // GET /users
 app.get('/api/users', getUsers);

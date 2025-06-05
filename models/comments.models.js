@@ -11,7 +11,7 @@ const fetchCommentsById = async (id) => {
       throw new Error('id not found');
     }
 
-    const sortedRows =  [...rows].sort((a, b) => {
+    const sortedRows = [...rows].sort((a, b) => {
       return new Date(b.created_at) - new Date(a.created_at);
     });
     return sortedRows;
@@ -20,4 +20,22 @@ const fetchCommentsById = async (id) => {
   }
 };
 
-module.exports = fetchCommentsById;
+const insertCommentByArticleId = async (id, username, body) => {
+  //validate id
+  const article_id = Number(id);
+  try {
+    const { rows } = await db.query(
+      `INSERT INTO comments (article_id, body, author) VALUES ($1, $2, $3) RETURNING *`,
+      [article_id, body, username]
+    );
+    // console.log(rows[0], 'rows in model');
+    return rows[0];
+  } catch (err) {
+    if (err.code === '23503') {
+      console.error('Foreign key violation:', err.message);
+    } 
+    throw err;
+  }
+};
+
+module.exports = { fetchCommentsById, insertCommentByArticleId };

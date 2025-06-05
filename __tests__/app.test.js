@@ -100,6 +100,33 @@ describe('GET api/article/:article_id', () => {
   });
 });
 
+describe('Errors: /api/articles', () => {
+  test('400: Responds with error message for invalid article type', () => {
+    return request(app)
+      .get('/api/articles/notanum')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid id');
+      });
+  });
+  test('400: Responds with invalid id for PG bad type (POSTGRES)', () => {
+    return request(app)
+      .get('/api/articles/dog123')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid id');
+      });
+  });
+  test('404: Responds with error message for non existent article id in database', () => {
+    return request(app)
+      .get('/api/articles/999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('id not found');
+      });
+  });
+});
+
 describe('GET api/articles/:article_id/comments', () => {
   test('200: Responds with an object with the key of comments and the value of an array of comments for the given article_id', () => {
     return request(app)
@@ -132,12 +159,12 @@ describe('Errors: /api/articles/:articleid/comments', () => {
     });
     test('404: Responds with error for blank article id', () => {
       return request(app)
-      .get('/api/articles/%20/comments')
-      .expect(404)
-      .then(({body}) => {
-        expect(body.msg).toBe('id not found')
-      })
-    })
+        .get('/api/articles/%20/comments')
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('id not found');
+        });
+    });
     test('404: Responds with error message for non existent comment id in database', () => {
       return request(app)
         .get('/api/articles/99999/comments')
@@ -157,30 +184,20 @@ describe('Errors: /api/articles/:articleid/comments', () => {
   });
 });
 
-// Testing /api/article for errors
-describe('Errors: /api/articles', () => {
-  test('400: Responds with error message for invalid article type', () => {
+describe('POST /api/articles/:article_id/comments', () => {
+  test('201: Posting a valid comment returns 201 with the created comment', () => {
+    const newComment = { username: 'butter_bridge', body: 'i like thumbs' };
     return request(app)
-      .get('/api/articles/notanum')
-      .expect(400)
+      .post('/api/articles/1/comments')
+      .send(newComment)
+      .expect(201)
       .then(({ body }) => {
-        expect(body.msg).toBe('invalid id');
-      });
-  });
-  test('400: Responds with invalid id for PG bad type (POSTGRES)', () => {
-    return request(app)
-      .get('/api/articles/dog123')
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).toBe('invalid id');
-      });
-  });
-  test('404: Responds with error message for non existent article id in database', () => {
-    return request(app)
-      .get('/api/articles/999999')
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.msg).toBe('id not found');
+        const {postedComment} = body;
+
+        expect(typeof postedComment.author).toBe('string');
+        expect(typeof postedComment.body).toBe('string');
+        expect(postedComment.author).toBe(newComment.username);
+        expect(postedComment.body).toBe(newComment.body);
       });
   });
 });
