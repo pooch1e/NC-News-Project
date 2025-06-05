@@ -11,6 +11,7 @@ const {
   getTopics,
   getArticles,
   getArticleById,
+  getCommentsByArticleId,
   getUsers,
 } = require('./controllers/index.controllers');
 
@@ -31,9 +32,11 @@ app.get('/api/topics', getTopics);
 // GET /articles
 app.get('/api/articles', getArticles);
 
-// TODO add error management
 // GET /api/articles/:article_id
 app.get('/api/articles/:article_id', getArticleById);
+
+// GET /api/articles/:article_id/comments
+app.get('/api/articles/:article_id/comments', getCommentsByArticleId);
 
 // GET /users
 app.get('/api/users', getUsers);
@@ -44,8 +47,8 @@ app.use((req, res, next) => {
 });
 
 // ERROR HANDLING - must be in order
-app.use(handleCustomError);
 app.use(handlePgErrors);
+app.use(handleCustomError);
 app.use(handleServerError);
 
 module.exports = app;
