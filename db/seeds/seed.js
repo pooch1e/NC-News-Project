@@ -46,7 +46,7 @@ const seed = async ({
     );
     // Comments
     await db.query(
-      `CREATE TABLE IF NOT EXISTS comments (comment_id SERIAL PRIMARY KEY, article_ID INT REFERENCES articles(article_id), body TEXT, votes INT DEFAULT 0, author VARCHAR(100) REFERENCES users(username), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )`
+      `CREATE TABLE IF NOT EXISTS comments (comment_id SERIAL PRIMARY KEY, article_id INT REFERENCES articles(article_id), body TEXT, votes INT DEFAULT 0, author VARCHAR(100) REFERENCES users(username), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP )`
     );
 
     // ----- INSERT DATA
@@ -137,6 +137,7 @@ const seed = async ({
         });
 
         const getArticleId = returnedArticle_id[article_title];
+        // console.log('Mapping:', article_title, '->', getArticleId);
 
         return [
           getArticleId,
