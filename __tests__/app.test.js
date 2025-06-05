@@ -27,6 +27,18 @@ describe('GET /api', () => {
       });
   });
 });
+
+describe('Invalid route', () => {
+  test('404 - Responds with route not found when url is invalid', () => {
+    return request(app)
+      .get('/api/invalid')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('route not found');
+      });
+  });
+});
+
 describe('GET api/topics', () => {
   test('200: Responds with an object detailing all topics', () => {
     return request(app)
