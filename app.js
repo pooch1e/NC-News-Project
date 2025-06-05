@@ -13,6 +13,7 @@ const {
   getArticleById,
   getCommentsByArticleId,
   postCommentByArticleId,
+  patchArticleById,
   getUsers,
 } = require('./controllers/index.controllers');
 
@@ -42,6 +43,9 @@ app.get('/api/articles/:article_id/comments', getCommentsByArticleId);
 // POST /api/articles/:article_id/comments
 app.post('/api/articles/:article_id/comments', postCommentByArticleId);
 
+//TODO write error tests
+// PATCH /api/articles/:article_id
+app.patch('/api/articles/:article_id', patchArticleById);
 // GET /users
 app.get('/api/users', getUsers);
 

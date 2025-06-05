@@ -28,13 +28,11 @@ const insertCommentByArticleId = async (id, username, body) => {
       `INSERT INTO comments (article_id, body, author) VALUES ($1, $2, $3) RETURNING *`,
       [article_id, body, username]
     );
-    // console.log(rows[0], 'rows in model');
+
     return rows[0];
   } catch (err) {
     if (err.code === '23503') {
-      // console.error('Foreign key violation:', err.message);
-    
-    throw err;
+      throw err;
     }
   }
 };
