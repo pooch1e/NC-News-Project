@@ -19,4 +19,18 @@ const fetchArticleById = async (id) => {
   return rows;
 };
 
-module.exports = { fetchArticles, fetchArticleById };
+const updateArticleById = async (votes, id) => {
+  const article_id = Number(id);
+  try {
+    const { rows } = await db.query(
+      `UPDATE articles SET votes = votes + $1 WHERE article_id = $2 RETURNING *`,
+      [votes, article_id]
+    );
+    const article = rows[0];
+    return article;
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { fetchArticles, fetchArticleById, updateArticleById };

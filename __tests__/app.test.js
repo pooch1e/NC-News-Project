@@ -193,7 +193,6 @@ describe('POST /api/articles/:article_id/comments', () => {
       .expect(201)
       .then(({ body }) => {
         const { postedComment } = body;
-        console.log(postedComment)
 
         expect(typeof postedComment.author).toBe('string');
         expect(typeof postedComment.body).toBe('string');
@@ -215,6 +214,49 @@ describe('ERRORS /api/articles/:article_id/comments', () => {
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe('Username does not exist');
+      });
+  });
+});
+
+describe('PATCH /api/articles/:article_id', () => {
+  test('200 : Responds with the updated article', () => {
+    const newVotes = { inc_votes: 1 };
+    return request(app)
+      .patch('/api/articles/1')
+      .send(newVotes)
+      .expect(200)
+      .then(({ body }) => {
+        const { updatedArticle } = body;
+        expect(typeof updatedArticle.article_id).toBe('number');
+        expect(typeof updatedArticle.title).toBe('string');
+        expect(typeof updatedArticle.topic).toBe('string');
+        expect(typeof updatedArticle.author).toBe('string');
+        expect(typeof updatedArticle.body).toBe('string');
+        expect(typeof updatedArticle.created_at).toBe('string');
+        expect(typeof updatedArticle.votes).toBe('number');
+        expect(typeof updatedArticle.article_img_url).toBe('string');
+
+        expect(updatedArticle.votes).toBe(101);
+      });
+  });
+  test('200 : Responds with the updated article', () => {
+    const newNegVotes = { inc_votes: -100 };
+    return request(app)
+      .patch('/api/articles/2')
+      .send(newNegVotes)
+      .expect(200)
+      .then(({ body }) => {
+        const { updatedArticle } = body;
+        expect(typeof updatedArticle.article_id).toBe('number');
+        expect(typeof updatedArticle.title).toBe('string');
+        expect(typeof updatedArticle.topic).toBe('string');
+        expect(typeof updatedArticle.author).toBe('string');
+        expect(typeof updatedArticle.body).toBe('string');
+        expect(typeof updatedArticle.created_at).toBe('string');
+        expect(typeof updatedArticle.votes).toBe('number');
+        expect(typeof updatedArticle.article_img_url).toBe('string');
+
+        expect(updatedArticle.votes).toBe(-100);
       });
   });
 });
