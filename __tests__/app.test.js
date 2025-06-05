@@ -88,6 +88,26 @@ describe('GET api/article/:article_id', () => {
   });
 });
 
+// Testing /api/article for errors
+describe('Errors: /api/articles', () => {
+  test('400: Responds with error message for invalid article type', () => {
+    return request(app)
+      .get('/api/articles/notanum')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid id');
+      });
+  });
+  test('404: Responds with error message for non existent article id in database', () => {
+    return request(app)
+      .get('/api/articles/99')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('article not found');
+      });
+  });
+});
+
 describe('GET api/users', () => {
   test('200: Responds with an object with the key of users and the value of an array of objects', () => {
     return request(app)
