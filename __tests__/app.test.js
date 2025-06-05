@@ -193,6 +193,7 @@ describe('POST /api/articles/:article_id/comments', () => {
       .expect(201)
       .then(({ body }) => {
         const { postedComment } = body;
+        console.log(postedComment)
 
         expect(typeof postedComment.author).toBe('string');
         expect(typeof postedComment.body).toBe('string');

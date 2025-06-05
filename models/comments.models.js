@@ -32,9 +32,10 @@ const insertCommentByArticleId = async (id, username, body) => {
     return rows[0];
   } catch (err) {
     if (err.code === '23503') {
-      console.error('Foreign key violation:', err.message);
-    } 
+      // console.error('Foreign key violation:', err.message);
+    
     throw err;
+    }
   }
 };
 
