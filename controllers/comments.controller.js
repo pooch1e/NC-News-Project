@@ -5,7 +5,7 @@ const {
   removeCommentById,
 } = require('../models/index.models');
 
-const getCommentsByArticleId = async (req, res) => {
+const getCommentsByArticleId = async (req, res, next) => {
   if (req.params.article_id === '') {
     return res.status(400).send({ status: 400, msg: 'invalid type' });
   }
@@ -26,10 +26,11 @@ const getCommentsByArticleId = async (req, res) => {
     if (err.message === 'id not found') {
       res.status(404).send({ msg: err.message });
     }
+    next(err);
   }
 };
 
-const postCommentByArticleId = async (req, res) => {
+const postCommentByArticleId = async (req, res, next) => {
   // console.log('hello from post comment')
   const { username, body } = req.body;
   const { article_id } = req.params;
@@ -47,6 +48,7 @@ const postCommentByArticleId = async (req, res) => {
       // Foreign key violation
       return Promise.reject({ status: 400, msg: 'Username does not exist' });
     }
+    next(err);
   }
 };
 
