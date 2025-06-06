@@ -46,9 +46,8 @@ The following is _not_ a comprehensive list! Its purpose is just to get the ball
 
 ### PATCH `/api/articles/:article_id`
 
-- Bad `article_id` (e.g. `/dog`)
-- Well formed `article_id` that doesn't exist in the database (e.g. `/999999`)
-- Invalid `inc_votes` (e.g. `{ inc_votes : "cat" }`)
+- 404 Responds with error message for non existent article id in database eg articles/999999
+- 400: Responds with error message when inc_votes body is missing eg e.g. `{ inc_votes : "cat" }`
 
 ### POST `/api/articles/:article_id/comments`
 
