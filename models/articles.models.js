@@ -1,30 +1,51 @@
 //articles.models.js
 const db = require('../db/connection');
+const { checkExists } = require('../db/seeds/utils');
 
-const fetchArticles = async ({ sort_by = 'created_at', order = 'desc' }) => {
-  const validSortParams = [
-    'author',
-    'title',
-    'votes',
-    'created_at',
-    'comment_count',
-  ];
-  const validOrderParams = ['asc', 'desc'];
+const fetchArticles = async ({
+  sort_by = 'created_at',
+  order = 'desc',
+  topic,
+}) => {
+  try {
+    // validate topics exist
+    if (topic) {
+      await checkExists('topics', 'slug', topic);
+    }
+    const validSortParams = [
+      'author',
+      'title',
+      'votes',
+      'created_at',
+      'comment_count',
+    ];
+    const validOrderParams = ['asc', 'desc'];
 
-  if (!validSortParams.includes(sort_by)) {
-    return Promise.reject({ status: 400, msg: 'Invalid sort_by query' });
+    if (!validSortParams.includes(sort_by)) {
+      return Promise.reject({ status: 400, msg: 'Invalid sort_by query' });
+    }
+
+    if (!validOrderParams.includes(order)) {
+      return Promise.reject({ status: 400, msg: 'Invalid order query' });
+    }
+
+    const queryParams = [];
+
+    let baseQuery = `SELECT articles.*, COUNT(comments.comment_id) AS comment_count FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id`;
+
+    if (topic) {
+      queryParams.push(topic);
+      baseQuery += ` WHERE articles.topic = $1`;
+    }
+    // finish query string
+    baseQuery += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order.toUpperCase()}`;
+
+    const { rows } = await db.query(baseQuery, queryParams);
+
+    return rows;
+  } catch (err) {
+    throw err;
   }
-
-  if (!validOrderParams.includes(order)) {
-    return Promise.reject({ status: 400, msg: 'Invalid order query' });
-  }
-
-  const queryParams = [];
-  let queryString = `SELECT articles.*, COUNT(comments.comment_id) AS comment_count FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id GROUP BY articles.article_id ORDER BY ${sort_by} ${order.toUpperCase()}`;
-
-  const { rows } = await db.query(queryString);
-
-  return rows;
 };
 
 const fetchArticleById = async (id) => {

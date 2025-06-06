@@ -375,15 +375,53 @@ describe('ERRORS GET /api/articles (sorting queries)', () => {
       .get('/api/articles?sort_by=banana')
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('Invalid sort_by query')
+        expect(body.msg).toBe('Invalid sort_by query');
       });
   });
-    test('400: Bad request, invalid order query', () => {
+  test('400: Bad request, invalid order query', () => {
     return request(app)
       .get('/api/articles?order=banana')
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('Invalid order query')
+        expect(body.msg).toBe('Invalid order query');
+      });
+  });
+});
+
+describe('GET /api/articles (topic queries)', () => {
+  describe('sorts articles by topic, defaults to all articles if no topic provided', () => {
+    test('when queried with a topic, returns all articles with that topic', () => {
+      return request(app)
+        .get('/api/articles?topic=mitch')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles.length).not.toBe(0);
+          articles.forEach((article) => {
+            expect(typeof article.topic).toBe('string');
+            expect(article.topic).toBe('mitch');
+          });
+        });
+    });
+    test('when queried with a valid topic, returns empty array if there are no articles', () => {
+      return request(app)
+        .get('/api/articles?topic=paper')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles.length).toBe(0);
+        });
+    });
+  });
+});
+
+describe('ERRORS GET /api/articles (topics)', () => {
+  test('404: Bad request, invalid topic query - not in database', () => {
+    return request(app)
+      .get('/api/articles?topic=banana')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Resource not found');
       });
   });
 });
