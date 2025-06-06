@@ -357,7 +357,34 @@ describe('GET /api/articles (sorting queries)', () => {
     });
   });
   describe('combined sort and order', () => {
-    test.todo('sorts articles by title in ascending order');
+    test('sorts articles by title in ascending order', () => {
+      return request(app)
+        .get('/api/articles?sort_by=title&order=asc')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles).toBeSortedBy('title', { ascending: 'true' });
+        });
+    });
+  });
+});
+
+describe('ERRORS GET /api/articles (sorting queries)', () => {
+  test('400: Bad request, invalid sort_by query', () => {
+    return request(app)
+      .get('/api/articles?sort_by=banana')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid sort_by query')
+      });
+  });
+    test('400: Bad request, invalid order query', () => {
+    return request(app)
+      .get('/api/articles?order=banana')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid order query')
+      });
   });
 });
 
