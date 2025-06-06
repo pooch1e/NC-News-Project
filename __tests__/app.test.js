@@ -5,6 +5,7 @@ const seed = require('../db/seeds/seed');
 const data = require('../db/data/test-data');
 const request = require('supertest');
 const app = require('../app');
+const { toBeSortedBy } = require('jest-sorted');
 
 /* Set up your test imports here */
 
@@ -146,7 +147,7 @@ describe('GET api/articles/:article_id/comments', () => {
   });
 });
 
-describe('Errors: /api/articles/:articleid/comments', () => {
+describe('Errors: GET /api/articles/:articleid/comments', () => {
   describe('tests for PG errors', () => {
     test('400: Responds with error for invalid article id format', () => {
       return request(app)
@@ -201,7 +202,7 @@ describe('POST /api/articles/:article_id/comments', () => {
   });
 });
 
-describe('ERRORS /api/articles/:article_id/comments', () => {
+describe('ERRORS POST /api/articles/:article_id/comments', () => {
   test('400: Responds with FK error if no author exists', () => {
     const invalidComment = {
       username: 'eric cartman',
@@ -306,15 +307,43 @@ describe('ERRORS DELETE /api/comments/:comment_id', () => {
   });
   test('404: Comment not found', () => {
     return request(app)
-    .delete('/api/comments/999999')
-    .expect(404)
-    .then(({body}) => {
-      expect(body.msg).toBe('comment not found')
-    })
-  })
+      .delete('/api/comments/999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('comment not found');
+      });
+  });
 });
 
-
+describe('GET /api/articles (sorting queries)', () => {
+  describe('sort_by (defaults to descending', () => {
+    test('200 : sorts articles by (defaults to) created_at', () => {
+      return request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles).toBeSortedBy('created_at', { descending: 'true' });
+        });
+    });
+    test('200 : sorts articles by votes', () => {
+      return request(app)
+        .get('/api/articles?sort_by=votes')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles).toBeSortedBy('votes', { descending: 'true' });
+        });
+    });
+  });
+  describe('order : sorts in asc or desc (defaults desc)', () => {
+    test.todo('sorts column in asc');
+    test.todo('sorts column desc');
+  });
+  describe('combined sort and order', () => {
+    test.todo('sorts articles by title in ascending order');
+  });
+});
 
 describe('GET api/users', () => {
   test('200: Responds with an object with the key of users and the value of an array of objects', () => {

@@ -1,4 +1,5 @@
 //articles.controller
+const { sort } = require('../db/data/test-data/articles');
 const {
   fetchArticles,
   fetchArticleById,
@@ -6,8 +7,13 @@ const {
 } = require('../models/index.models');
 
 const getArticles = async (req, res, next) => {
+  const {sort_by, order} = req.query;
+
+  // console.log(sort_by, order, topic)
+  // console.log(req.query, 'query obj')
+  
   try {
-    const articles = await fetchArticles();
+    const articles = await fetchArticles({sort_by, order});
     res.status(200).send({ articles });
   } catch (err) {
     next(err);
