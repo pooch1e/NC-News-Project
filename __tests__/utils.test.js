@@ -153,6 +153,8 @@ describe.skip('tests for getValueFromKey function', () => {
   });
 });
 
+// TODO tests for checkExists
+
 afterAll(async () => {
   await db.end();
 });

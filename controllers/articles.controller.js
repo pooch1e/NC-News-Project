@@ -5,16 +5,16 @@ const {
   updateArticleById,
 } = require('../models/index.models');
 
-const getArticles = async (req, res) => {
+const getArticles = async (req, res, next) => {
   try {
     const articles = await fetchArticles();
     res.status(200).send({ articles });
   } catch (err) {
-    throw err;
+    next(err);
   }
 };
 
-const getArticleById = async (req, res) => {
+const getArticleById = async (req, res, next) => {
   const { article_id } = req.params;
   try {
     //invalid id
@@ -32,20 +32,22 @@ const getArticleById = async (req, res) => {
   }
 };
 
-const patchArticleById = async (req, res) => {
+const patchArticleById = async (req, res, next) => {
   const { article_id } = req.params;
-  
+
   if (Object.keys(req.body).length === 0) {
-    return Promise.reject({status: 400, msg: 'Missing required field: inc_votes'})
+    return Promise.reject({
+      status: 400,
+      msg: 'Missing required field: inc_votes',
+    });
   }
   const { inc_votes } = req.body; //typeof number
-  
 
   try {
     const patchedArticle = await updateArticleById(inc_votes, article_id);
     res.status(200).send({ updatedArticle: patchedArticle });
   } catch (err) {
-    throw err;
+    next(err);
   }
 };
 

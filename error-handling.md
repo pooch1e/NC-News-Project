@@ -33,7 +33,7 @@ The following is _not_ a comprehensive list! Its purpose is just to get the ball
 
 ### GET `/not-a-route`
 
-- Status: ???
+- 404 - Responds with route not found when url is invalid
 
 ---
 
@@ -52,11 +52,14 @@ The following is _not_ a comprehensive list! Its purpose is just to get the ball
 
 ### POST `/api/articles/:article_id/comments`
 
-- ???
+400: Responds with FK error if no author exists
 
 ### GET `/api/articles/:article_id/comments`
 
-- ???
+400: Responds with error for invalid article id format
+404: Responds with error for blank article id
+404: Responds with error message for non existent comment id in database
+404: Responds with error message for existing comment but empty id in database
 
 ### GET `/api/articles`
 
@@ -65,11 +68,16 @@ The following is _not_ a comprehensive list! Its purpose is just to get the ball
   - `order` !== "asc" / "desc"
   - `topic` that is not in the database
   - `topic` that exists but does not have any articles associated with it
+    400: Responds with error message for invalid article type
+    400: Responds with invalid id for PG bad type (POSTGRES)
+    404: Responds with error message for non existent article id in database
 
 ### PATCH `/api/comments/:comment_id`
 
-- ???
+404: Responds with error message for non existent article id in database
+400: Responds with error message when inc_votes body is missing
 
 ### DELETE `/api/comments/:comment_id`
 
-- ???
+400: Invalid comment id
+404: Comment not found

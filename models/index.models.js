@@ -5,6 +5,7 @@ const { fetchArticles, fetchArticleById, updateArticleById } = require('./articl
 const {
   fetchCommentsById,
   insertCommentByArticleId,
+  removeCommentById
 } = require('./comments.models');
 const fetchUser = require('./user.models');
 
@@ -15,5 +16,6 @@ module.exports = {
   fetchCommentsById,
   insertCommentByArticleId,
   updateArticleById,
+  removeCommentById,
   fetchUser,
 };
