@@ -263,15 +263,24 @@ describe('PATCH /api/articles/:article_id', () => {
 
 describe('ERROR /api/articles/:article_id', () => {
   test('404: Responds with error message for non existent article id in database', () => {
-      return request(app)
-        .patch('/api/articles/99999')
-        .send({inc_votes : 1})
-        .expect(404)
-        .then(({ body }) => {
-          expect(body.msg).toBe('Article not found');
-        });
-    });
-})
+    return request(app)
+      .patch('/api/articles/99999')
+      .send({ inc_votes: 1 })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Article not found');
+      });
+  });
+  test('400: Responds with error message when inc_votes body is missing', () => {
+    return request(app)
+      .patch('/api/articles/2')
+      .send({})
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Missing required field: inc_votes');
+      });
+  });
+});
 
 //TODO write error tests for patch
 
