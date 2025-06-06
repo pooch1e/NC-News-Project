@@ -95,6 +95,7 @@ describe('GET api/article/:article_id', () => {
           expect(typeof article.created_at).toBe('string');
           expect(typeof article.votes).toBe('number');
           expect(typeof article.article_img_url).toBe('string');
+          expect(typeof article.comment_count).toBe('number');
         });
       });
   });

@@ -7,10 +7,6 @@ const fetchCommentsById = async (id) => {
       [id]
     );
 
-    if (rows.length === 0) {
-      throw new Error('id not found');
-    }
-
     const sortedRows = [...rows].sort((a, b) => {
       return new Date(b.created_at) - new Date(a.created_at);
     });
