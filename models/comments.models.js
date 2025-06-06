@@ -38,18 +38,16 @@ const insertCommentByArticleId = async (id, username, body) => {
 };
 
 const removeCommentById = async (id) => {
-
   try {
-    const deletedCommentConfirmation = await db.query(`DELETE FROM comments WHERE comment_id = $1`, [id])
-    
+    const deletedCommentConfirmation = await db.query(
+      `DELETE FROM comments WHERE comment_id = $1`,
+      [id]
+    );
+
     return deletedCommentConfirmation.rowCount;
-
-
   } catch (err) {
-
+    throw err;
   }
-
-  // catch error codes in controller
 };
 
 module.exports = {
