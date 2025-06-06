@@ -37,15 +37,19 @@ app.get('/api/articles', getArticles);
 // GET /api/articles/:article_id
 app.get('/api/articles/:article_id', getArticleById);
 
+//TODO write error tests
+// PATCH /api/articles/:article_id
+app.patch('/api/articles/:article_id', patchArticleById);
+
 // GET /api/articles/:article_id/comments
 app.get('/api/articles/:article_id/comments', getCommentsByArticleId);
 
 // POST /api/articles/:article_id/comments
 app.post('/api/articles/:article_id/comments', postCommentByArticleId);
 
-//TODO write error tests
-// PATCH /api/articles/:article_id
-app.patch('/api/articles/:article_id', patchArticleById);
+// DELETE /api/comments/:comment_id
+
+
 // GET /users
 app.get('/api/users', getUsers);
 

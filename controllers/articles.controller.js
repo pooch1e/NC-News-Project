@@ -34,7 +34,12 @@ const getArticleById = async (req, res) => {
 
 const patchArticleById = async (req, res) => {
   const { article_id } = req.params;
+  
+  if (Object.keys(req.body).length === 0) {
+    return Promise.reject({status: 400, msg: 'Missing required field: inc_votes'})
+  }
   const { inc_votes } = req.body; //typeof number
+  
 
   try {
     const patchedArticle = await updateArticleById(inc_votes, article_id);
