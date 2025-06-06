@@ -2,7 +2,7 @@
 const {
   fetchCommentsById,
   insertCommentByArticleId,
-  fetchArticleById,
+  removeCommentById,
 } = require('../models/index.models');
 
 const getCommentsByArticleId = async (req, res) => {
@@ -50,4 +50,28 @@ const postCommentByArticleId = async (req, res) => {
   }
 };
 
-module.exports = { getCommentsByArticleId, postCommentByArticleId };
+const deleteCommentByCommentId = async (req, res, next) => {
+  const { comment_id } = req.params;
+
+  if (isNaN(Number(comment_id))) {
+    return next({ status: 400, msg: 'Invalid ID' });
+  }
+  const comment_id_number = Number(comment_id);
+
+  try {
+    const deletedComment = await removeCommentById(comment_id_number);
+    
+    if (deletedComment === 0) {
+      return next({ status: 404, msg: 'comment not found' });
+    }
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = {
+  getCommentsByArticleId,
+  postCommentByArticleId,
+  deleteCommentByCommentId,
+};

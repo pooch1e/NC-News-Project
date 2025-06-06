@@ -28,7 +28,7 @@ describe('GET /api', () => {
   });
 });
 
-describe('Invalid route', () => {
+describe('ERROR Invalid route', () => {
   test('404 - Responds with route not found when url is invalid', () => {
     return request(app)
       .get('/api/invalid')
@@ -63,7 +63,6 @@ describe('GET api/articles', () => {
       .then(({ body }) => {
         const { articles } = body;
         expect(articles.length).not.toBe(0);
-
         articles.forEach((article) => {
           expect(typeof article.article_id).toBe('number');
           expect(typeof article.title).toBe('string');
@@ -261,7 +260,7 @@ describe('PATCH /api/articles/:article_id', () => {
   });
 });
 
-describe('ERROR /api/articles/:article_id', () => {
+describe('ERROR PATCH /api/articles/:article_id', () => {
   test('404: Responds with error message for non existent article id in database', () => {
     return request(app)
       .patch('/api/articles/99999')
@@ -282,7 +281,40 @@ describe('ERROR /api/articles/:article_id', () => {
   });
 });
 
-//TODO write error tests for patch
+describe('DELETE /api/comments/:comment_id', () => {
+  test('204: Responds with a status 204 and no response', () => {
+    return request(app)
+      .delete('/api/comments/1')
+      .expect(204)
+      .then(() => {
+        return request(app)
+          .get('/api/comments/1')
+          .expect(404)
+          .then(({ body }) => expect(body.msg).toBe('route not found'));
+      });
+  });
+});
+
+describe('ERRORS DELETE /api/comments/:comment_id', () => {
+  test('400: Invalid comment id', () => {
+    return request(app)
+      .delete('/api/comments/notanum')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid ID');
+      });
+  });
+  test('404: Comment not found', () => {
+    return request(app)
+    .delete('/api/comments/999999')
+    .expect(404)
+    .then(({body}) => {
+      expect(body.msg).toBe('comment not found')
+    })
+  })
+});
+
+
 
 describe('GET api/users', () => {
   test('200: Responds with an object with the key of users and the value of an array of objects', () => {

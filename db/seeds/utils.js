@@ -1,13 +1,13 @@
 const db = require('../../db/connection');
+const format = require("pg-format");
 
 exports.convertTimestampToDate = ({ created_at, ...otherProperties }) => {
   if (!created_at) return { ...otherProperties };
   return { created_at: new Date(created_at), ...otherProperties };
 };
 
-// UTIL FUNCTION TO COMPARE OBJECT TO DATA AND RETURN CORRECT ID
-// ! not currently dynamic
-// ! relies on querying DB?
+
+//!possibly remove
 exports.getArticleId = async ({ article_title, ...other_properties }) => {
   try {
     // placeholder
@@ -25,10 +25,9 @@ exports.getArticleId = async ({ article_title, ...other_properties }) => {
     throw err;
   }
 };
-// ! rewrite this
+
 exports.getValueFromKey = (arr, key, value) => {
   if (arr.length === 0) return {};
-
 
   return arr.reduce((acc, curr) => {
     acc[curr[key]] = curr[value];
@@ -36,13 +35,13 @@ exports.getValueFromKey = (arr, key, value) => {
   }, {});
 };
 
-// function responds with an object to reference a key from an array of objects to get the corresponding values
-// ! args
-//  array of objects
-//  key
-//  value
 
-// ? Tests
-// returns an empty object when passed an array of objects
-// returns an object with the correct key and value referenced when passed an array with a single object
-// returns an object with the correct key and value referenced when passed an array multiple objects
+exports.checkExists = async (table, column, value) => {
+  const queryStr = format("SELECT * FROM %I WHERE %I = $1;", table, column);
+  const dbOutput = await db.query(queryStr, [value]);
+  if (dbOutput.rows.length === 0) {
+    // resource does NOT exist
+    return Promise.reject({ status: 404, msg: "Resource not found" });
+  }
+};
+
