@@ -38,7 +38,9 @@ app.get('/api/articles', getArticles);
 // GET /api/articles/:article_id
 app.get('/api/articles/:article_id', getArticleById);
 
-//TODO write error tests
+// GET /api/articles (sorting queries)
+
+
 // PATCH /api/articles/:article_id
 app.patch('/api/articles/:article_id', patchArticleById);
 

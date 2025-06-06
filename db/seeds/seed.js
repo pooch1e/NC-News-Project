@@ -118,7 +118,6 @@ const seed = async ({
     await db.query(sqlUserArticleVotes);
 
     // Comments
-    //! CREATE look up object from Articles
     const returnedArticle_id = getValueFromKey(
       returnedArticles.rows,
       'title',
