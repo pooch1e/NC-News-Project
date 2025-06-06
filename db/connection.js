@@ -1,31 +1,29 @@
 const { Pool, types } = require('pg');
 
-types.setTypeParser(20, function (val) {
-  return parseInt(val, 10);
-});
+types.setTypeParser(20, (val) => parseInt(val, 10));
 
 const ENV = process.env.NODE_ENV || 'development';
 
+// Load the right .env file according to ENV
 require('dotenv').config({ path: `${__dirname}/../.env.${ENV}` });
 
-const db = new Pool();
-
+// Check env variables
 if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
-  throw new Error('PGDATABASE or DATABASE_URL not set');
+  throw new Error(
+    'PGDATABASE or DATABASE_URL environment variable must be set'
+  );
 }
 
+// Build config object depending on environment
 const config = {};
 
 if (ENV === 'production') {
   config.connectionString = process.env.DATABASE_URL;
-  config.max = 2;
+  config.max = 2; // Optional pool max connections for production
 }
-module.exports = new Pool(config);
 
-if (!process.env.PGDATABASE) {
-  throw new Error('No PGDATABASE configured');
-} else {
-  console.log(`Connected to ${process.env.PGDATABASE}`);
-}
+// Create pool
+const db = new Pool(config);
+
 
 module.exports = db;
