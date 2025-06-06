@@ -60,7 +60,7 @@ const deleteCommentByCommentId = async (req, res, next) => {
 
   try {
     const deletedComment = await removeCommentById(comment_id_number);
-    
+
     if (deletedComment === 0) {
       return next({ status: 404, msg: 'comment not found' });
     }
