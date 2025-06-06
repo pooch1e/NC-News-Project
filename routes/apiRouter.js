@@ -18,6 +18,7 @@ const {
 const topicsRouter = require('./topics.router');
 const articlesRouter = require('./articles.router');
 const commentsRouter = require('./comments.router');
+const usersRouter = require('./users.router');
 
 // HOMEPAGE - API
 apiRouter.get('/', getApi);
@@ -32,6 +33,6 @@ apiRouter.use('/articles', articlesRouter);
 apiRouter.use('/comments', commentsRouter);
 
 // GET /users
-apiRouter.get('/users', getUsers);
+apiRouter.get('/users', usersRouter);
 
 module.exports = apiRouter;
