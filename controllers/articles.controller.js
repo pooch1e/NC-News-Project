@@ -7,13 +7,13 @@ const {
 } = require('../models/index.models');
 
 const getArticles = async (req, res, next) => {
-  const {sort_by, order} = req.query;
+  const { sort_by, order } = req.query;
 
   // console.log(sort_by, order, topic)
   // console.log(req.query, 'query obj')
-  
+
   try {
-    const articles = await fetchArticles({sort_by, order});
+    const articles = await fetchArticles({ sort_by, order });
     res.status(200).send({ articles });
   } catch (err) {
     next(err);
