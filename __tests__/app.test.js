@@ -337,8 +337,24 @@ describe('GET /api/articles (sorting queries)', () => {
     });
   });
   describe('order : sorts in asc or desc (defaults desc)', () => {
-    test.todo('sorts column in asc');
-    test.todo('sorts column desc');
+    test('sorts column in desc order (default)', () => {
+      return request(app)
+        .get('/api/articles?sort_by=author')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles).toBeSortedBy('author', { descending: 'true' });
+        });
+    });
+    test('sorts column ascending order', () => {
+      return request(app)
+        .get('/api/articles?order_by=asc')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles).toBeSortedBy('', { ascending: 'true' });
+        });
+    });
   });
   describe('combined sort and order', () => {
     test.todo('sorts articles by title in ascending order');
