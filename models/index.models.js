@@ -1,13 +1,17 @@
 //index.modles
 
 const fetchTopics = require('./topics.models');
-const { fetchArticles, fetchArticleById, updateArticleById } = require('./articles.models');
+const {
+  fetchArticles,
+  fetchArticleById,
+  updateArticleById,
+} = require('./articles.models');
 const {
   fetchCommentsById,
   insertCommentByArticleId,
-  removeCommentById
+  removeCommentById,
 } = require('./comments.models');
-const fetchUser = require('./user.models');
+const { fetchUser, fetchUserByUsername } = require('./user.models');
 
 module.exports = {
   fetchTopics,
@@ -18,4 +22,5 @@ module.exports = {
   updateArticleById,
   removeCommentById,
   fetchUser,
+  fetchUserByUsername,
 };

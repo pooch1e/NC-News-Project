@@ -5,4 +5,17 @@ const fetchUser = async () => {
   return rows;
 };
 
-module.exports = fetchUser;
+const fetchUserByUsername = async (username) => {
+  console.log('hello from model');
+  try {
+    const { rows } = await db.query(`SELECT * FROM users WHERE username = $1`, [
+      username,
+    ]);
+    const user = rows[0];
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { fetchUser, fetchUserByUsername };

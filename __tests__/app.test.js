@@ -444,3 +444,23 @@ describe('GET api/users', () => {
       });
   });
 });
+
+describe('GET /api/users/:username', () => {
+  test('200: Responds with a user object from username', () => {
+    return request(app)
+      .get('/api/users/icellusedkars')
+      .expect(200)
+      .then(({ body }) => {
+        const { user } = body;
+        expect(typeof user.username).toBe('string');
+        expect(typeof user.name).toBe('string');
+        expect(typeof user.avatar_url).toBe('string');
+      });
+  });
+});
+
+describe('ERRORS /api/user/:username', () => {
+  test('404: User not found', () => {
+    
+  })
+})

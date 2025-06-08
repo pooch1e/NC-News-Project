@@ -8,7 +8,6 @@ const {
   getArticleById,
   patchArticleById,
 } = require('../controllers/index.controllers');
-const articles = require('../db/data/test-data/articles');
 
 const commentsRouter = require('./comments.router');
 

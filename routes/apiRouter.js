@@ -3,16 +3,7 @@
 const apiRouter = require('express').Router();
 
 // import controllers
-const {
-  getApi,
-  getArticles,
-  getArticleById,
-  getCommentsByArticleId,
-  postCommentByArticleId,
-  patchArticleById,
-  deleteCommentByCommentId,
-  getUsers,
-} = require('../controllers/index.controllers');
+const { getApi } = require('../controllers/index.controllers');
 
 //import routers
 const topicsRouter = require('./topics.router');
@@ -33,6 +24,6 @@ apiRouter.use('/articles', articlesRouter);
 apiRouter.use('/comments', commentsRouter);
 
 // GET /users
-apiRouter.get('/users', usersRouter);
+apiRouter.use('/users', usersRouter);
 
 module.exports = apiRouter;
