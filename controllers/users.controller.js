@@ -13,6 +13,10 @@ const getUsersByUsername = async (req, res, next) => {
   const { username } = req.params;
   try {
     const user = await fetchUserByUsername(username);
+    
+    if (!user) {
+      throw Promise.reject({ status: 404, msg: 'Invalid username' });
+    }
     res.status(200).send({ user });
   } catch (err) {
     next(err);

@@ -35,7 +35,7 @@ describe('ERROR Invalid route', () => {
       .get('/api/invalid')
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe('route not found');
+        expect(body.msg).toBe('Route not found');
       });
   });
 });
@@ -292,7 +292,7 @@ describe('DELETE /api/comments/:comment_id', () => {
         return request(app)
           .get('/api/comments/1')
           .expect(404)
-          .then(({ body }) => expect(body.msg).toBe('route not found'));
+          .then(({ body }) => expect(body.msg).toBe('Route not found'));
       });
   });
 });
@@ -461,6 +461,11 @@ describe('GET /api/users/:username', () => {
 
 describe('ERRORS /api/user/:username', () => {
   test('404: User not found', () => {
-    
-  })
-})
+    return request(app)
+      .get('/api/user/dingusMcberry')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Route not found');
+      });
+  });
+});

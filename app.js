@@ -16,12 +16,14 @@ const {
   handlePgErrors,
 } = require('./errors/index.errors');
 
-// Catch 404 - invalid route
-app.use((req, res, next) => {
-  next({ status: 404, msg: 'route not found' });
-});
+
 
 // ERROR HANDLING - must be in order
+// Catch 404 - invalid route
+app.use((req, res, next) => {
+  next({ status: 404, msg: 'Route not found' });
+});
+
 app.use(handlePgErrors);
 app.use(handleCustomError);
 app.use(handleServerError);
