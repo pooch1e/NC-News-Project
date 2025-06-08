@@ -14,6 +14,10 @@ if (!process.env.PGDATABASE && !process.env.DATABASE_URL) {
   );
 }
 
+console.log('NODE_ENV:', ENV);
+console.log('PGDATABASE:', process.env.PGDATABASE);
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
+
 // Build config object depending on environment
 const config = {};
 

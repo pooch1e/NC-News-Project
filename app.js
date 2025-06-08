@@ -16,8 +16,6 @@ const {
   handlePgErrors,
 } = require('./errors/index.errors');
 
-
-
 // ERROR HANDLING - must be in order
 // Catch 404 - invalid route
 app.use((req, res, next) => {

@@ -462,10 +462,10 @@ describe('GET /api/users/:username', () => {
 describe('ERRORS /api/user/:username', () => {
   test('404: User not found', () => {
     return request(app)
-      .get('/api/user/dingus')
+      .get('/api/users/dingus')
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe('Route not found');
+        expect(body.msg).toBe('Invalid username');
       });
   });
 });
