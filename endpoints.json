@@ -39,6 +39,16 @@
       ]
     }
   },
+  "GET /api/users/:username": {
+    "description": "serves an object of user by specified username",
+    "exampleResponse": {
+      "user": {
+        "username": "pookie1",
+        "name": "Blumpf Barton",
+        "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
+      }
+    }
+  },
   "GET /api/articles/:articleid/comments": {
     "description": "serves an array of all comments for article id",
     "exampleResponse": {
