@@ -6,13 +6,13 @@ const fetchUser = async () => {
 };
 
 const fetchUserByUsername = async (username) => {
-  console.log('hello from model');
+  
   try {
     const { rows } = await db.query(`SELECT * FROM users WHERE username = $1`, [
       username,
     ]);
     const user = rows[0];
-    return user;
+    return user || null;
   } catch (err) {
     throw err;
   }

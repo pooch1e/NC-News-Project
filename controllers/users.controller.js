@@ -9,13 +9,16 @@ const getUsers = async (req, res, next) => {
 };
 
 const getUsersByUsername = async (req, res, next) => {
-  console.log('hello from users controller');
   const { username } = req.params;
   try {
     const user = await fetchUserByUsername(username);
-    
+
     if (!user) {
-      throw Promise.reject({ status: 404, msg: 'Invalid username' });
+      return Promise.reject({ status: 404, msg: 'Invalid username' });
+    }
+    //is this same thing?
+    if (null) {
+      return Promise.reject({ status: 404, msg: 'Username not found' });
     }
     res.status(200).send({ user });
   } catch (err) {
