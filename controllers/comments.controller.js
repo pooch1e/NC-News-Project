@@ -52,6 +52,14 @@ const postCommentByArticleId = async (req, res, next) => {
   }
 };
 
+const patchCommentById = async (req, res, next) => {
+  console.log('hello from patch comment');
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
+
 const deleteCommentByCommentId = async (req, res, next) => {
   const { comment_id } = req.params;
 
@@ -75,5 +83,6 @@ const deleteCommentByCommentId = async (req, res, next) => {
 module.exports = {
   getCommentsByArticleId,
   postCommentByArticleId,
+  patchCommentById,
   deleteCommentByCommentId,
 };

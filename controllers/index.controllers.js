@@ -2,9 +2,18 @@
 
 const getApi = require('./api.controller');
 const getTopics = require('./topics.controller');
-const { getArticles, getArticleById, patchArticleById } = require('./articles.controller');
-const {getCommentsByArticleId, postCommentByArticleId, deleteCommentByCommentId} = require('./comments.controller');
-const {getUsers, getUsersByUsername} = require('./users.controller');
+const {
+  getArticles,
+  getArticleById,
+  patchArticleById,
+} = require('./articles.controller');
+const {
+  getCommentsByArticleId,
+  postCommentByArticleId,
+  patchCommentById,
+  deleteCommentByCommentId,
+} = require('./comments.controller');
+const { getUsers, getUsersByUsername } = require('./users.controller');
 
 module.exports = {
   getApi,
@@ -14,7 +23,8 @@ module.exports = {
   getCommentsByArticleId,
   postCommentByArticleId,
   patchArticleById,
+  patchCommentById,
   deleteCommentByCommentId,
   getUsers,
-  getUsersByUsername
+  getUsersByUsername,
 };

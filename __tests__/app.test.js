@@ -316,6 +316,19 @@ describe('ERRORS DELETE /api/comments/:comment_id', () => {
   });
 });
 
+// describe('PATCH /api/comments/:comment_id', () => {
+//   test('200: accepts a req body of number of votes and will update comment, responds with an updated comment', () => {
+//     return request(app)
+//       .get('/api/comments/1')
+//       .send({ inc_votes: 1 })
+//       .expect(200)
+//       .then(({ body }) => {
+//         const { comment } = body;
+//         expect(comment.votes).toBe(comment.votes + 1);
+//       });
+//   });
+// });
+
 describe('GET /api/articles (sorting queries)', () => {
   describe('sort_by (defaults to descending', () => {
     test('200 : sorts articles by (defaults to) created_at', () => {

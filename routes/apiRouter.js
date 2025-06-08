@@ -20,7 +20,10 @@ apiRouter.use('/topics', topicsRouter);
 // GET /articles
 apiRouter.use('/articles', articlesRouter);
 
-// DELETE comments
+// GET comments
+apiRouter.use('/articles/:article_id/comments', commentsRouter);
+
+// PATCH/DELETE
 apiRouter.use('/comments', commentsRouter);
 
 // GET /users
