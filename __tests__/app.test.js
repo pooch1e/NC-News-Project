@@ -316,18 +316,75 @@ describe('ERRORS DELETE /api/comments/:comment_id', () => {
   });
 });
 
-// describe('PATCH /api/comments/:comment_id', () => {
-//   test('200: accepts a req body of number of votes and will update comment, responds with an updated comment', () => {
-//     return request(app)
-//       .get('/api/comments/1')
-//       .send({ inc_votes: 1 })
-//       .expect(200)
-//       .then(({ body }) => {
-//         const { comment } = body;
-//         expect(comment.votes).toBe(comment.votes + 1);
-//       });
-//   });
-// });
+describe.only('PATCH /api/comments/:comment_id', () => {
+  test('200: Updates given vote count on comment id and responds with updated comment', () => {
+    const newVotes = { inc_votes: 1 };
+    return request(app)
+      .patch('/api/comments/1')
+      .send(newVotes)
+      .expect(200)
+      .then(({ body }) => {
+        const { comment } = body;
+        console.log(comment);
+        expect(typeof comment.comment_id).toBe('number');
+        expect(typeof comment.article_id).toBe('number');
+        expect(typeof comment.body).toBe('string');
+        expect(typeof comment.votes).toBe('number');
+        expect(typeof comment.author).toBe('string');
+        expect(typeof comment.created_at).toBe('string');
+        expect(comment.votes).toBe(17);
+      });
+  });
+
+  describe('ERROR PATCH /api/comments/:comment_id', () => {
+    test('404: Responds with error message for non existent comment id in database', () => {
+      return request(app)
+        .patch('/api/comments/99999')
+        .send({ inc_votes: 1 })
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('Comment not found');
+        });
+    });
+    test('400: Responds with error message when inc_votes body is missing', () => {
+      return request(app)
+        .patch('/api/comments/2')
+        .send({})
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe('Missing required field: inc_votes');
+        });
+    });
+    test('400: Responds with error message when inc_votes body is invalid', () => {
+      return request(app)
+        .patch('/api/comments/2')
+        .send({ inc_votes: 'banana' })
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.msg).toBe('invalid type');
+        });
+    });
+  });
+
+  test('200: Updates given vote count on comment id when passed negative votes and responds with updated comment', () => {
+    const newVotes = { inc_votes: -100 };
+    return request(app)
+      .patch('/api/comments/1')
+      .send(newVotes)
+      .expect(200)
+      .then(({ body }) => {
+        const { comment } = body;
+        console.log(comment);
+        expect(typeof comment.comment_id).toBe('number');
+        expect(typeof comment.article_id).toBe('number');
+        expect(typeof comment.body).toBe('string');
+        expect(typeof comment.votes).toBe('number');
+        expect(typeof comment.author).toBe('string');
+        expect(typeof comment.created_at).toBe('string');
+        expect(comment.votes).toBe(-84);
+      });
+  });
+});
 
 describe('GET /api/articles (sorting queries)', () => {
   describe('sort_by (defaults to descending', () => {

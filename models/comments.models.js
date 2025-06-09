@@ -1,6 +1,6 @@
 const db = require('../db/connection');
 
-const fetchCommentsById = async (id) => {
+const fetchCommentsByArticleId = async (id) => {
   try {
     const { rows } = await db.query(
       `SELECT comments.comment_id, comments.article_id, comments.body, comments.votes, comments.author, comments.created_at, articles.title FROM comments JOIN articles ON comments.article_id = articles.article_id WHERE comments.article_id = $1`,
@@ -33,6 +33,23 @@ const insertCommentByArticleId = async (id, username, body) => {
   }
 };
 
+const updateCommentsByCommentId = async (votes, comment_id) => {
+  try {
+    const { rows } = await db.query(
+      `UPDATE comments SET votes = votes + $1 WHERE comment_id = $2 RETURNING *`,
+      [votes, comment_id]
+    );
+    if (rows.length === 0) {
+      throw { status: 404, msg: 'Comment not found' };
+    }
+    const updatedComment = rows[0];
+
+    return updatedComment;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const removeCommentById = async (id) => {
   try {
     const deletedCommentConfirmation = await db.query(
@@ -47,7 +64,8 @@ const removeCommentById = async (id) => {
 };
 
 module.exports = {
-  fetchCommentsById,
+  fetchCommentsByArticleId,
   insertCommentByArticleId,
+  updateCommentsByCommentId,
   removeCommentById,
 };

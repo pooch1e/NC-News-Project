@@ -1,7 +1,8 @@
 // comments controller.js
 const {
-  fetchCommentsById,
+  fetchCommentsByArticleId,
   insertCommentByArticleId,
+  updateCommentsByCommentId,
   removeCommentById,
 } = require('../models/index.models');
 
@@ -16,7 +17,7 @@ const getCommentsByArticleId = async (req, res, next) => {
       return Promise.reject({ status: 400, msg: 'invalid id' });
     }
 
-    const comments = await fetchCommentsById(article_id);
+    const comments = await fetchCommentsByArticleId(article_id);
     //db error or non-existent article id
     if (!isNaN(article_id) && comments.length === 0) {
       return Promise.reject({ status: 404, msg: 'id not found' });
@@ -53,8 +54,19 @@ const postCommentByArticleId = async (req, res, next) => {
 };
 
 const patchCommentById = async (req, res, next) => {
-  console.log('hello from patch comment');
+  const comment_id = Number(req.params.comment_id);
+
+  if (Object.keys(req.body).length === 0) {
+    return Promise.reject({
+      status: 400,
+      msg: 'Missing required field: inc_votes',
+    });
+  }
+  const { inc_votes } = req.body; //typeof number
   try {
+    const comment = await updateCommentsByCommentId(inc_votes, comment_id);
+
+    res.status(200).send({ comment });
   } catch (err) {
     next(err);
   }
