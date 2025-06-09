@@ -54,7 +54,7 @@ const fetchArticles = async ({
       queryParams.push(limit, offset);
       baseQuery += ' LIMIT $1 OFFSET $2';
     }
-
+    // TODO add count of articles somehow
     const { rows } = await db.query(baseQuery, queryParams);
 
     return rows;

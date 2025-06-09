@@ -686,6 +686,17 @@ describe('GET api/articles (pagination)', () => {
   });
 });
 
+describe('ERRORS for api/articles (pagination)', () => {
+  test('Invalid pagination query', () => {
+    return request(app)
+      .get('/api/articles?limit=abc&p=24')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid page query');
+      });
+  });
+});
+
 describe('GET /api/users/:username', () => {
   test('200: Responds with a user object from username', () => {
     return request(app)
