@@ -1,5 +1,12 @@
 # NC-News-Project - Backend API
 
+TODO
+
+1. Finish pagination with page count
+2. Add pagination to comments
+3. Add post for topics
+4. Add delete for articles
+
 ![Node.js](https://img.shields.io/badge/Node.js-v18%2B-green)
 ![Express](https://img.shields.io/badge/Express-v4-blue)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-orange)
