@@ -6,6 +6,7 @@ const {
   getArticles,
   getArticleById,
   patchArticleById,
+  postArticle
 } = require('./articles.controller');
 const {
   getCommentsByArticleId,
@@ -20,6 +21,7 @@ module.exports = {
   getTopics,
   getArticles,
   getArticleById,
+  postArticle,
   getCommentsByArticleId,
   postCommentByArticleId,
   patchArticleById,

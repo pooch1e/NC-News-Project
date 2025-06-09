@@ -68,10 +68,33 @@ const updateArticleById = async (votes, id) => {
     }
     const article = rows[0];
     return article;
-    
   } catch (err) {
     throw err;
   }
 };
 
-module.exports = { fetchArticles, fetchArticleById, updateArticleById };
+const postNewArticle = async ({
+  title,
+  topic,
+  author,
+  body,
+  article_img_url,
+}) => {
+  try {
+    // Insert article
+    const { rows } = await db.query(
+      `WITH inserted AS (INSERT INTO articles (title, topic, author, body, article_img_url) VALUES ($1, $2, $3, $4, $5) RETURNING *) SELECT inserted.*, COUNT (comments.comment_id) AS comment_count FROM inserted LEFT JOIN comments ON comments.comment_id = inserted.article_id GROUP BY inserted.title, inserted.topic, inserted.author, inserted.author, inserted.body, inserted.created_at, inserted.votes, inserted.article_img_url, inserted.article_id`,
+      [title, topic, author, body, article_img_url]
+    );
+    return rows[0];
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = {
+  fetchArticles,
+  fetchArticleById,
+  updateArticleById,
+  postNewArticle,
+};

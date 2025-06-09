@@ -3,6 +3,7 @@ const {
   fetchArticles,
   fetchArticleById,
   updateArticleById,
+  postNewArticle,
 } = require('../models/index.models');
 
 const getArticles = async (req, res, next) => {
@@ -10,7 +11,10 @@ const getArticles = async (req, res, next) => {
 
   try {
     const articles = await fetchArticles({ sort_by, order, topic });
-    res.status(200).send({ articles });
+    const articlesWithNoBody = articles.map(({ body, ...rest }) => {
+      return { ...rest };
+    });
+    res.status(200).send({ articles: articlesWithNoBody });
   } catch (err) {
     next(err);
   }
@@ -53,4 +57,34 @@ const patchArticleById = async (req, res, next) => {
   }
 };
 
-module.exports = { getArticles, getArticleById, patchArticleById };
+const postArticle = async (req, res, next) => {
+  console.log('hello from post article');
+  console.log(req.body, 'incoming req body');
+  const { title, body, author, topic } = req.body;
+  let { article_img_url } = req.body;
+
+  if (!article_img_url) {
+    article_img_url = 'www.default.com/jpg';
+  }
+
+  // if fields invalid
+  if (!title || !body || !author || !topic) {
+    return Promise.reject({ status: 400, msg: 'Invalid fields' });
+  }
+
+  try {
+    const newArticle = await postNewArticle({
+      title,
+      topic,
+      author,
+      body,
+      article_img_url,
+    });
+
+    res.status(201).send({ newArticle });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getArticles, getArticleById, patchArticleById, postArticle };

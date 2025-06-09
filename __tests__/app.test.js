@@ -13,10 +13,6 @@ beforeEach(() => {
   return seed(data);
 });
 
-afterAll(() => {
-  return db.end();
-});
-
 describe('GET /api', () => {
   test('200: Responds with an object detailing the documentation for each endpoint', () => {
     return request(app)
@@ -69,6 +65,7 @@ describe('GET api/articles', () => {
           expect(typeof article.title).toBe('string');
           expect(typeof article.topic).toBe('string');
           expect(typeof article.author).toBe('string');
+          expect(typeof article.body).toBe('undefined');
           expect(typeof article.created_at).toBe('string');
           expect(typeof article.votes).toBe('number');
           expect(typeof article.article_img_url).toBe('string');
@@ -254,6 +251,33 @@ describe('Errors: GET /api/articles/:articleid/comments', () => {
           expect(body.msg).toBe('id not found');
         });
     });
+  });
+});
+
+describe('POST /api/articles', () => {
+  test('201: Adds a new article and responds with obj of new article with correct properties', () => {
+    const newArticle = {
+      title: 'My new article',
+      topic: 'mitch',
+      author: 'butter_bridge',
+      body: 'this is my new article, check it out',
+      article_img_url: 'www.ashasjhdha.com',
+    };
+    return request(app)
+      .post('/api/articles')
+      .send(newArticle)
+      .expect(201)
+      .then(({ body }) => {
+        const { newArticle } = body;
+        expect(typeof newArticle.author).toBe('string');
+        expect(typeof newArticle.title).toBe('string');
+        expect(typeof newArticle.body).toBe('string');
+        expect(typeof newArticle.topic).toBe('string');
+        expect(typeof newArticle.article_img_url).toBe('string');
+        expect(typeof newArticle.article_id).toBe('number');
+        expect(typeof newArticle.created_at).toBe('string');
+        expect(typeof newArticle.comment_count).toBe('number');
+      });
   });
 });
 
@@ -446,7 +470,7 @@ describe('PATCH /api/comments/:comment_id', () => {
       .expect(200)
       .then(({ body }) => {
         const { comment } = body;
-        console.log(comment);
+
         expect(typeof comment.comment_id).toBe('number');
         expect(typeof comment.article_id).toBe('number');
         expect(typeof comment.body).toBe('string');
@@ -610,4 +634,8 @@ describe('ERRORS /api/user/:username', () => {
         expect(body.msg).toBe('Invalid username');
       });
   });
+});
+
+afterAll(() => {
+  return db.end();
 });
