@@ -7,10 +7,10 @@ const {
 } = require('../models/index.models');
 
 const getArticles = async (req, res, next) => {
-  const { sort_by, order, topic } = req.query;
+  const { sort_by, order, topic, limit, p } = req.query;
 
   try {
-    const articles = await fetchArticles({ sort_by, order, topic });
+    const articles = await fetchArticles({ sort_by, order, topic, limit, p });
     const articlesWithNoBody = articles.map(({ body, ...rest }) => {
       return { ...rest };
     });
@@ -53,6 +53,7 @@ const patchArticleById = async (req, res, next) => {
     const patchedArticle = await updateArticleById(inc_votes, article_id);
     res.status(200).send({ updatedArticle: patchedArticle });
   } catch (err) {
+    
     next(err);
   }
 };

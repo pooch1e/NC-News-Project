@@ -654,6 +654,38 @@ describe('GET api/users', () => {
   });
 });
 
+describe('GET api/articles (pagination)', () => {
+  describe('paginated articles, limit and page', () => {
+    test('defaults to 10 pages', () => {
+      return request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then(({ body }) => {
+          const { articles } = body;
+          expect(articles.length).toBe(10);
+        });
+    });
+  });
+  test('returns a limited number of articles', () => {
+    return request(app)
+      .get('/api/articles?limit=5')
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles.length).toBe(5);
+      });
+  });
+  test('returns correct amount of pages', () => {
+    return request(app)
+      .get('/api/articles?p=2')
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles.length).toBe(3);
+      });
+  });
+});
+
 describe('GET /api/users/:username', () => {
   test('200: Responds with a user object from username', () => {
     return request(app)

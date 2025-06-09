@@ -6,8 +6,13 @@ const fetchArticles = async ({
   sort_by = 'created_at',
   order = 'desc',
   topic,
+  limit = 10,
+  p = 1,
 }) => {
   try {
+    if (isNaN(limit) || isNaN(p) || limit < 1 || p < 1) {
+      return Promise.reject({ status: 400, msg: 'Invalid page query' });
+    }
     // validate topics exist
     if (topic) {
       await checkExists('topics', 'slug', topic);
@@ -28,7 +33,7 @@ const fetchArticles = async ({
     if (!validOrderParams.includes(order)) {
       return Promise.reject({ status: 400, msg: 'Invalid order query' });
     }
-
+    const offset = (p - 1) * limit; // begin at page 0
     const queryParams = [];
 
     let baseQuery = `SELECT articles.*, COUNT(comments.comment_id) AS comment_count FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id`;
@@ -37,8 +42,18 @@ const fetchArticles = async ({
       queryParams.push(topic);
       baseQuery += ` WHERE articles.topic = $1`;
     }
-    // finish query string
+
+    // group and sort
     baseQuery += ` GROUP BY articles.article_id ORDER BY ${sort_by} ${order.toUpperCase()}`;
+
+    // ! limit?
+    if (topic) {
+      queryParams.push(limit, offset);
+      baseQuery += ' LIMIT $2 OFFSET $3'; // if topic exists its $1 !!!!
+    } else {
+      queryParams.push(limit, offset);
+      baseQuery += ' LIMIT $1 OFFSET $2';
+    }
 
     const { rows } = await db.query(baseQuery, queryParams);
 
@@ -89,7 +104,6 @@ const postNewArticle = async ({
 
     return rows[0];
   } catch (err) {
-
     throw err;
   }
 };
