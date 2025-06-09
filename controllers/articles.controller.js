@@ -58,8 +58,6 @@ const patchArticleById = async (req, res, next) => {
 };
 
 const postArticle = async (req, res, next) => {
-  console.log('hello from post article');
-  console.log(req.body, 'incoming req body');
   const { title, body, author, topic } = req.body;
   let { article_img_url } = req.body;
 

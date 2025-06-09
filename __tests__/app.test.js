@@ -281,6 +281,49 @@ describe('POST /api/articles', () => {
   });
 });
 
+describe('ERRORS POST /api/articles', () => {
+  test('400: missing required fields', () => {
+    const errorObj = { title: 'only one here' };
+    return request(app)
+      .post('/api/articles')
+      .send(errorObj)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid fields');
+      });
+  });
+  test('404: Author does not exist', () => {
+    const errorArticle = {
+      title: 'not an article',
+      body: 'woo woo!',
+      author: 'nonexistent_user',
+      topic: 'mitch',
+    };
+    return request(app)
+      .post('/api/articles')
+      .send(errorArticle)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('User not found');
+      });
+  });
+  test('404: Topic does not exist', () => {
+    const errorArticle = {
+      title: 'not an article',
+      body: 'woo woo!',
+      author: 'mitch',
+      topic: 'foosball',
+    };
+    return request(app)
+      .post('/api/articles')
+      .send(errorArticle)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Topic not found');
+      });
+  });
+});
+
 describe('POST /api/articles/:article_id/comments', () => {
   test('201: Posting a valid comment returns 201 with the created comment', () => {
     const newComment = { username: 'butter_bridge', body: 'i like thumbs' };

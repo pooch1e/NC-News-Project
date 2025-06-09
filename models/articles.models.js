@@ -86,8 +86,16 @@ const postNewArticle = async ({
       `WITH inserted AS (INSERT INTO articles (title, topic, author, body, article_img_url) VALUES ($1, $2, $3, $4, $5) RETURNING *) SELECT inserted.*, COUNT (comments.comment_id) AS comment_count FROM inserted LEFT JOIN comments ON comments.comment_id = inserted.article_id GROUP BY inserted.title, inserted.topic, inserted.author, inserted.author, inserted.body, inserted.created_at, inserted.votes, inserted.article_img_url, inserted.article_id`,
       [title, topic, author, body, article_img_url]
     );
+
     return rows[0];
   } catch (err) {
+    if (err.code === '23503') {
+      if (err.constraint === 'articles_topic_fkey') {
+        return Promise.reject({ status: 404, msg: 'Topic not found' });
+      } else {
+        return Promise.reject({ status: 404, msg: 'User not found' });
+      }
+    }
     throw err;
   }
 };
