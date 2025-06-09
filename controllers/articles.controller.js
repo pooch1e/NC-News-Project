@@ -11,10 +11,10 @@ const getArticles = async (req, res, next) => {
 
   try {
     const articles = await fetchArticles({ sort_by, order, topic, limit, p });
-    const articlesWithNoBody = articles.map(({ body, ...rest }) => {
+    const articleWithNoBody = articles.map(({ body, ...rest }) => {
       return { ...rest };
     });
-    res.status(200).send({ articles: articlesWithNoBody });
+    res.status(200).send({ articles });
   } catch (err) {
     next(err);
   }
@@ -25,14 +25,14 @@ const getArticleById = async (req, res, next) => {
   try {
     //invalid id
     if (isNaN(article_id)) {
-      return Promise.reject({ status: 400, msg: 'invalid id' });
+      return Promise.reject({ status: 400, msg: 'Invalid id' });
     }
-    const articles = await fetchArticleById(article_id);
+    const article = await fetchArticleById(article_id);
     //db error or non-existent article id
-    if (!isNaN(article_id) && articles.length === 0) {
-      return Promise.reject({ status: 404, msg: 'id not found' });
+    if (!article) {
+      return Promise.reject({ status: 404, msg: 'Id not found' });
     }
-    res.status(200).send({ articles });
+    res.status(200).send({ article });
   } catch (err) {
     next(err);
   }
@@ -41,19 +41,20 @@ const getArticleById = async (req, res, next) => {
 const patchArticleById = async (req, res, next) => {
   const { article_id } = req.params;
 
-  if (Object.keys(req.body).length === 0) {
-    return Promise.reject({
-      status: 400,
-      msg: 'Missing required field: inc_votes',
-    });
-  }
   const { inc_votes } = req.body; //typeof number
 
   try {
+    if (Object.keys(req.body).length === 0) {
+      const article = await fetchArticleById(article_id)
+      if (!article) {
+        return Promise.reject({status : 400, msg: "Article does not exist"})
+      } else {
+        res.status(200).send({article})
+      }
+    }
     const patchedArticle = await updateArticleById(inc_votes, article_id);
     res.status(200).send({ updatedArticle: patchedArticle });
   } catch (err) {
-    
     next(err);
   }
 };

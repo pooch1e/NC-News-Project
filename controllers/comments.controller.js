@@ -1,4 +1,5 @@
 // comments controller.js
+const { checkExists } = require('../db/seeds/utils');
 const {
   fetchCommentsByArticleId,
   insertCommentByArticleId,
@@ -8,20 +9,18 @@ const {
 
 const getCommentsByArticleId = async (req, res, next) => {
   if (req.params.article_id === '') {
-    return res.status(400).send({ status: 400, msg: 'invalid type' });
+    return res.status(400).send({ status: 400, msg: 'Invalid type' });
   }
   const article_id = Number(req.params.article_id);
 
   try {
     if (isNaN(article_id)) {
-      return Promise.reject({ status: 400, msg: 'invalid id' });
+      return Promise.reject({ status: 400, msg: 'Invalid id' });
     }
+    await checkExists('articles', 'article_id', article_id);
 
     const comments = await fetchCommentsByArticleId(article_id);
-    //db error or non-existent article id
-    if (!isNaN(article_id) && comments.length === 0) {
-      return Promise.reject({ status: 404, msg: 'id not found' });
-    }
+
     res.status(200).send({ comments });
   } catch (err) {
     if (err.message === 'id not found') {
@@ -32,11 +31,18 @@ const getCommentsByArticleId = async (req, res, next) => {
 };
 
 const postCommentByArticleId = async (req, res, next) => {
-
   const { username, body } = req.body;
   const { article_id } = req.params;
 
+  if (!username || !body) {
+    return res
+      .status(400)
+      .send({ msg: 'Missing required fields: username and body' });
+  }
+
   try {
+    await checkExists('articles', 'article_id', article_id);
+    await checkExists('users', 'username', username)
     const postedComment = await insertCommentByArticleId(
       article_id,
       username,
@@ -47,7 +53,7 @@ const postCommentByArticleId = async (req, res, next) => {
   } catch (err) {
     if (err.code === '23503') {
       // Foreign key violation
-      return Promise.reject({ status: 400, msg: 'Username does not exist' });
+      return Promise.reject({ status: 400, msg: 'Bad Request' });
     }
     next(err);
   }

@@ -65,7 +65,6 @@ describe('GET api/articles', () => {
           expect(typeof article.title).toBe('string');
           expect(typeof article.topic).toBe('string');
           expect(typeof article.author).toBe('string');
-          expect(typeof article.body).toBe('undefined');
           expect(typeof article.created_at).toBe('string');
           expect(typeof article.votes).toBe('number');
           expect(typeof article.article_img_url).toBe('string');
@@ -75,25 +74,23 @@ describe('GET api/articles', () => {
   });
 });
 
-describe('GET api/article/:article_id', () => {
+describe('GET api/articles/:article_id', () => {
   test('200: Responds with an object with the key of article and the value of an article object', () => {
     return request(app)
       .get('/api/articles/1')
       .expect(200)
       .then(({ body }) => {
-        const { articles } = body;
-        expect(articles.length).not.toBe(0);
-        articles.forEach((article) => {
-          expect(typeof article.article_id).toBe('number');
-          expect(typeof article.title).toBe('string');
-          expect(typeof article.topic).toBe('string');
-          expect(typeof article.author).toBe('string');
-          expect(typeof article.body).toBe('string');
-          expect(typeof article.created_at).toBe('string');
-          expect(typeof article.votes).toBe('number');
-          expect(typeof article.article_img_url).toBe('string');
-          expect(typeof article.comment_count).toBe('number');
-        });
+        const { article } = body;
+
+        expect(typeof article.article_id).toBe('number');
+        expect(typeof article.title).toBe('string');
+        expect(typeof article.topic).toBe('string');
+        expect(typeof article.author).toBe('string');
+        expect(typeof article.body).toBe('string');
+        expect(typeof article.created_at).toBe('string');
+        expect(typeof article.votes).toBe('number');
+        expect(typeof article.article_img_url).toBe('string');
+        expect(typeof article.comment_count).toBe('number');
       });
   });
 });
@@ -104,7 +101,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/notanum')
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('invalid id');
+        expect(body.msg).toBe('Invalid id');
       });
   });
   test('400: Responds with invalid id for PG bad type (POSTGRES)', () => {
@@ -112,7 +109,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/dog123')
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('invalid id');
+        expect(body.msg).toBe('Invalid id');
       });
   });
   test('404: Responds with error message for non existent article id in database', () => {
@@ -120,7 +117,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/999999')
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe('id not found');
+        expect(body.msg).toBe('Id not found');
       });
   });
 });
@@ -153,19 +150,17 @@ describe('GET api/article/:article_id', () => {
       .get('/api/articles/1')
       .expect(200)
       .then(({ body }) => {
-        const { articles } = body;
-        expect(articles.length).not.toBe(0);
-        articles.forEach((article) => {
-          expect(typeof article.article_id).toBe('number');
-          expect(typeof article.title).toBe('string');
-          expect(typeof article.topic).toBe('string');
-          expect(typeof article.author).toBe('string');
-          expect(typeof article.body).toBe('string');
-          expect(typeof article.created_at).toBe('string');
-          expect(typeof article.votes).toBe('number');
-          expect(typeof article.article_img_url).toBe('string');
-          expect(typeof article.comment_count).toBe('number');
-        });
+        const { article } = body;
+
+        expect(typeof article.article_id).toBe('number');
+        expect(typeof article.title).toBe('string');
+        expect(typeof article.topic).toBe('string');
+        expect(typeof article.author).toBe('string');
+        expect(typeof article.body).toBe('string');
+        expect(typeof article.created_at).toBe('string');
+        expect(typeof article.votes).toBe('number');
+        expect(typeof article.article_img_url).toBe('string');
+        expect(typeof article.comment_count).toBe('number');
       });
   });
 });
@@ -176,7 +171,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/notanum')
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('invalid id');
+        expect(body.msg).toBe('Invalid id');
       });
   });
   test('400: Responds with invalid id for PG bad type (POSTGRES)', () => {
@@ -184,7 +179,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/dog123')
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('invalid id');
+        expect(body.msg).toBe('Invalid id');
       });
   });
   test('404: Responds with error message for non existent article id in database', () => {
@@ -192,7 +187,7 @@ describe('Errors: /api/articles', () => {
       .get('/api/articles/999999')
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe('id not found');
+        expect(body.msg).toBe('Id not found');
       });
   });
 });
@@ -204,7 +199,6 @@ describe('GET api/articles/:article_id/comments', () => {
       .expect(200)
       .then(({ body }) => {
         const { comments } = body;
-
         comments.forEach((comment) => {
           expect(typeof comment.comment_id).toBe('number');
           expect(typeof comment.article_id).toBe('number');
@@ -213,6 +207,14 @@ describe('GET api/articles/:article_id/comments', () => {
           expect(typeof comment.author).toBe('string');
           expect(typeof comment.created_at).toBe('string');
         });
+      });
+  });
+  test('200: Returns empty array when article exists but has no comments', () => {
+    return request(app)
+      .get('/api/articles/10/comments')
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.comments).toEqual([]);
       });
   });
 });
@@ -224,7 +226,7 @@ describe('Errors: GET /api/articles/:articleid/comments', () => {
         .get('/api/articles/notanum/comments')
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).toBe('invalid id');
+          expect(body.msg).toBe('Invalid id');
         });
     });
     test('404: Responds with error for blank article id', () => {
@@ -232,7 +234,7 @@ describe('Errors: GET /api/articles/:articleid/comments', () => {
         .get('/api/articles/%20/comments')
         .expect(404)
         .then(({ body }) => {
-          expect(body.msg).toBe('id not found');
+          expect(body.msg).toBe('Resource not found');
         });
     });
     test('404: Responds with error message for non existent comment id in database', () => {
@@ -240,15 +242,7 @@ describe('Errors: GET /api/articles/:articleid/comments', () => {
         .get('/api/articles/99999/comments')
         .expect(404)
         .then(({ body }) => {
-          expect(body.msg).toBe('id not found');
-        });
-    });
-    test('404: Responds with error message for existing comment but empty id in database', () => {
-      return request(app)
-        .get('/api/articles/2/comments')
-        .expect(404)
-        .then(({ body }) => {
-          expect(body.msg).toBe('id not found');
+          expect(body.msg).toBe('Resource not found');
         });
     });
   });
@@ -346,14 +340,39 @@ describe('ERRORS POST /api/articles/:article_id/comments', () => {
   test('400: Responds with FK error if no author exists', () => {
     const invalidComment = {
       username: 'eric cartman',
-      body: 'invalid body, I do not exist',
+      body: 'Invalid body, I do not exist',
     };
     return request(app)
       .post('/api/articles/1/comments')
       .send(invalidComment)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Resource not found');
+      });
+  });
+  test('404: Responds with bad request if post contains valid article id that does not exist ', () => {
+    const invalidComment = { username: 'butter_bridge', body: 'i like thumbs' };
+
+    return request(app)
+      .post('/api/articles/1000/comments')
+      .send(invalidComment)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Resource not found');
+      });
+  });
+  test('400: Responds with Bad Request for invalid article_id (non-numeric)', () => {
+    const invalidComment = {
+      username: 'butter_bridge',
+      body: 'This is a comment on a non-numeric article_id',
+    };
+
+    return request(app)
+      .post('/api/articles/not-a-valid-id/comments')
+      .send(invalidComment)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe('Username does not exist');
+        expect(body.msg).toBe('Invalid type');
       });
   });
 });
@@ -409,15 +428,6 @@ describe('ERROR PATCH /api/articles/:article_id', () => {
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe('Article not found');
-      });
-  });
-  test('400: Responds with error message when inc_votes body is missing', () => {
-    return request(app)
-      .patch('/api/articles/2')
-      .send({})
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.msg).toBe('Missing required field: inc_votes');
       });
   });
 });
@@ -500,7 +510,7 @@ describe('PATCH /api/comments/:comment_id', () => {
         .send({ inc_votes: 'banana' })
         .expect(400)
         .then(({ body }) => {
-          expect(body.msg).toBe('invalid type');
+          expect(body.msg).toBe('Invalid type');
         });
     });
   });

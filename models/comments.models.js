@@ -10,6 +10,7 @@ const fetchCommentsByArticleId = async (id) => {
     const sortedRows = [...rows].sort((a, b) => {
       return new Date(b.created_at) - new Date(a.created_at);
     });
+
     return sortedRows;
   } catch (err) {
     throw err;
