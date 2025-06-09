@@ -64,7 +64,7 @@ const updateArticleById = async (votes, id) => {
       [votes, article_id]
     );
     if (rows.length === 0) {
-      throw { status: 404, msg: 'Comment not found' };
+      throw { status: 404, msg: 'Article not found' };
     }
     const article = rows[0];
     return article;

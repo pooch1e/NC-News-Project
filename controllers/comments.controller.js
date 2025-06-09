@@ -32,7 +32,7 @@ const getCommentsByArticleId = async (req, res, next) => {
 };
 
 const postCommentByArticleId = async (req, res, next) => {
-  // console.log('hello from post comment')
+
   const { username, body } = req.body;
   const { article_id } = req.params;
 

@@ -128,6 +128,78 @@ describe('Errors: /api/articles', () => {
   });
 });
 
+describe('GET api/articles', () => {
+  test('200: Responds with an object with the key of articles and the value of an array of article objects', () => {
+    return request(app)
+      .get('/api/articles')
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles.length).not.toBe(0);
+        articles.forEach((article) => {
+          expect(typeof article.article_id).toBe('number');
+          expect(typeof article.title).toBe('string');
+          expect(typeof article.topic).toBe('string');
+          expect(typeof article.author).toBe('string');
+          expect(typeof article.created_at).toBe('string');
+          expect(typeof article.votes).toBe('number');
+          expect(typeof article.article_img_url).toBe('string');
+          expect(typeof article.comment_count).toBe('number');
+        });
+      });
+  });
+});
+
+describe('GET api/article/:article_id', () => {
+  test('200: Responds with an object with the key of article and the value of an article object', () => {
+    return request(app)
+      .get('/api/articles/1')
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles.length).not.toBe(0);
+        articles.forEach((article) => {
+          expect(typeof article.article_id).toBe('number');
+          expect(typeof article.title).toBe('string');
+          expect(typeof article.topic).toBe('string');
+          expect(typeof article.author).toBe('string');
+          expect(typeof article.body).toBe('string');
+          expect(typeof article.created_at).toBe('string');
+          expect(typeof article.votes).toBe('number');
+          expect(typeof article.article_img_url).toBe('string');
+          expect(typeof article.comment_count).toBe('number');
+        });
+      });
+  });
+});
+
+describe('Errors: /api/articles', () => {
+  test('400: Responds with error message for invalid article type', () => {
+    return request(app)
+      .get('/api/articles/notanum')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid id');
+      });
+  });
+  test('400: Responds with invalid id for PG bad type (POSTGRES)', () => {
+    return request(app)
+      .get('/api/articles/dog123')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid id');
+      });
+  });
+  test('404: Responds with error message for non existent article id in database', () => {
+    return request(app)
+      .get('/api/articles/999999')
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('id not found');
+      });
+  });
+});
+
 describe('GET api/articles/:article_id/comments', () => {
   test('200: Responds with an object with the key of comments and the value of an array of comments for the given article_id', () => {
     return request(app)
@@ -316,7 +388,7 @@ describe('ERRORS DELETE /api/comments/:comment_id', () => {
   });
 });
 
-describe.only('PATCH /api/comments/:comment_id', () => {
+describe('PATCH /api/comments/:comment_id', () => {
   test('200: Updates given vote count on comment id and responds with updated comment', () => {
     const newVotes = { inc_votes: 1 };
     return request(app)
@@ -325,7 +397,7 @@ describe.only('PATCH /api/comments/:comment_id', () => {
       .expect(200)
       .then(({ body }) => {
         const { comment } = body;
-        console.log(comment);
+
         expect(typeof comment.comment_id).toBe('number');
         expect(typeof comment.article_id).toBe('number');
         expect(typeof comment.body).toBe('string');
