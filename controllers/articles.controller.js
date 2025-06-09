@@ -81,6 +81,13 @@ const postArticle = async (req, res, next) => {
 
     res.status(201).send({ newArticle });
   } catch (err) {
+    if (err.code === '23503') {
+      if (err.constraint === 'articles_topic_fkey') {
+        return Promise.reject({ status: 404, msg: 'Topic not found' });
+      } else {
+        return Promise.reject({ status: 404, msg: 'User not found' });
+      }
+    }
     next(err);
   }
 };

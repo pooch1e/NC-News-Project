@@ -27,6 +27,23 @@
       ]
     }
   },
+  "POST /api/articles": {
+    "description": "Posts a new article",
+    "exampleResponse": {
+      "article": [
+        {
+          "article_id": "17",
+          "title": "How to make proper ramen",
+          "topic": "cooking",
+          "author": "Jiro",
+          "created_at": "2018-05-30T15:59:13.341Z",
+          "votes": 0,
+          "article_img_url": "imager.hello_test",
+          "comment_count": 0
+        }
+      ]
+    }
+  },
   "GET /api/users": {
     "description": "serves an array of all users",
     "exampleResponse": {
