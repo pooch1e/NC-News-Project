@@ -108,7 +108,7 @@ main {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 250px; /* Adjust width as needed */
+  width: 250px; 
   padding: 2rem 1rem;
   background: var(--fbc-gray-20);
   border-right: 1px solid #e1e4e8;
@@ -116,8 +116,6 @@ main {
   height: 100vh;
   box-sizing: border-box;
 }
-
-
 
 /* Container adjustments */
 #api-nav-container {
@@ -160,8 +158,9 @@ main {
 /* FIX THIS IS COMPLETELY BROKEN */
 .docs-container {
   display: grid;
-  grid-template-columns: 50px 200px;
+  grid-template-columns: 50px 200px 1fr;
   gap: 50px;
+  
   padding: 40px;
 }
 .docs-gutter-left {
@@ -172,6 +171,13 @@ width: 200px
 
 width: 500px;
   
+}
+
+.docs-content-right {
+  /* background-color: red; */
+  grid-column: 3;
+  margin-top: 30px;
+  margin-left: 300px;
 }
 
 /* examples */
