@@ -13,7 +13,7 @@ const usersRouter = require('./users.router');
 
 // HOMEPAGE - API
 
-apiRouter.get('/', getApi);
+// apiRouter.get('/', getApi);
 
 // TOPICS
 apiRouter.use('/topics', topicsRouter);
