@@ -5,7 +5,7 @@ const app = express();
 // parse JSON
 app.use(express.json());
 // serve HTML page
-app.use('/api', express.static('public'));
+app.use('/', express.static('public'));
 
 // import Routers
 const apiRouter = require('./routes/apiRouter');
