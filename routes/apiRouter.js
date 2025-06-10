@@ -12,6 +12,7 @@ const commentsRouter = require('./comments.router');
 const usersRouter = require('./users.router');
 
 // HOMEPAGE - API
+
 apiRouter.get('/', getApi);
 
 // TOPICS

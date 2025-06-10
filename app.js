@@ -7,6 +7,7 @@ app.use(express.json());
 
 // import Routers
 const apiRouter = require('./routes/apiRouter');
+app.use('/api', express.static('public'));
 app.use('/api', apiRouter);
 
 // import error handling
