@@ -7,7 +7,7 @@
   <title>NC News Docs</title>
 </head>
 <body>
-  <header>
+  <header class="header">
   <div class="top-bar">
     <nav>
       <ul>
@@ -18,17 +18,28 @@
       </ul>
     </nav>
   </div>
-<section class="title"> 
-  <div id="title-container">
-
-  <h1>NC News Docs</h1>
-  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto ullam non est officia provident veritatis rem ducimus laborum tenetur repellendus, inventore dolorum optio laboriosam ab voluptas voluptatem excepturi velit deserunt.</p>
-  </div> 
-</section>
-
 </header>
 
 <main>
+  <div class="docs-container">
+    <div class="docs-content">
+      <div class="docs-gutter-left"></div>
+      <section class="title"> 
+        <div id="title-container">
+
+        <h1>NC News Docs</h1>
+        <p>A robust backend API for a Reddit-style news platform, built with Node.js and Express. This project provides comprehensive article, topic, user, and comment management functionality.</p>
+        </div> 
+    </section>
+
+    <section class="examples">
+      <div id="examples-container">
+        <h2>Examples</h2>
+        <p>example.... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error quasi maiores eos ratione asperiores nisi quo distinctio ipsa molestias voluptatibus! Alias, dolorem excepturi temporibus doloremque eos optio eligendi neque maxime!</p>
+      </div>
+    </section>
+
+
 <section class="api-nav">
   <div id="api-nav-container">
     <h2>API Navigation</h2>
@@ -47,23 +58,17 @@
     </ul>
   </div>
 </section>
-<section class="examples">
-  <div id="examples-container">
-    <h2>Examples</h2>
-    <p>example.... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error quasi maiores eos ratione asperiores nisi quo distinctio ipsa molestias voluptatibus! Alias, dolorem excepturi temporibus doloremque eos optio eligendi neque maxime!</p>
-  </div>
-</section>
 
-
+<section class="api-parent">
 <section class="api-topics">
   <h2>API ENDPOINTS</h2>
   <div id="topic-container">
     <div id="get-api-topics">
     <details open>
         <summary>GET /api/topics</summary>
-        <p><strong>Description:</strong> serves an array of all topics</p>
-        <p><strong>Queries:</strong> None</p>
-        <p><strong>Example Response:</strong></p>
+        <p>Description: serves an array of all topics</p>
+        <p>Queries: None</p>
+        <p>Example Response:</p>
         <pre><code>{
       "topics": [
         {
@@ -305,7 +310,9 @@
     </div>
   </div>
 </section>
-
+</section>
+    </div>
+</div>
 
   
 </main>
