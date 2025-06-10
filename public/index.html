@@ -22,8 +22,8 @@
 
 <main>
   <div class="docs-container">
+    <div class="docs-gutter-left"></div>
     <div class="docs-content">
-      <div class="docs-gutter-left"></div>
       <section class="title"> 
         <div id="title-container">
 
@@ -32,12 +32,12 @@
         </div> 
     </section>
 
-    <section class="examples">
+    <!-- <section class="examples">
       <div id="examples-container">
         <h2>Examples</h2>
         <p>example.... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error quasi maiores eos ratione asperiores nisi quo distinctio ipsa molestias voluptatibus! Alias, dolorem excepturi temporibus doloremque eos optio eligendi neque maxime!</p>
       </div>
-    </section>
+    </section> -->
 
 
 <section class="api-nav">
@@ -64,6 +64,7 @@
 <section class="api-topics">
   <h2>API ENDPOINTS</h2>
   <div id="topic-container">
+    <h3>Topics</h3>
     <div id="get-api-topics">
     <details open>
         <summary>GET /api/topics</summary>
@@ -84,9 +85,11 @@
 </section>
 
 <section class="api-articles">
+
   <div id="articles-container">
+        <h3>Articles</h3>
     <div id="get-api-articles">
-      <details>
+      <details open>
       <summary>GET /api/articles</summary>
       <p>Description: serves an array of all articles</p>
       <p>Queries: sort_by, order, topics, limit, p</p>
@@ -185,9 +188,11 @@
 </section>
 
 <section class="api-users">
+
   <div id="users-container">
+        <h3>Users</h3>
     <div id="get-api-users">
-      <details>
+      <details open>
         <summary>GET /api/users</summary>
         <p>Description: serves an array of all users</p>
         <p>Example Response:</p>
@@ -219,9 +224,11 @@
   </div>
 </section>
 <section class="api-comments">
+
   <div id="comments-container">
+        <h3>Comments</h3>
     <div id="get-api-articles-comments">
-      <details>
+      <details open>
         <summary>GET /api/articles/:article_id/comments</summary>
         <p>Description: serves an array of all comments for article id</p>
         <p>Queries: limit (default 10), p (page number)</p>
