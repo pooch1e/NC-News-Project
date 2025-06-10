@@ -13,17 +13,6 @@ beforeEach(() => {
   return seed(data);
 });
 
-// describe('GET /api', () => {
-//   test('200: Responds with an object detailing the documentation for each endpoint', () => {
-//     return request(app)
-//       .get('/api/json')
-//       .expect(200)
-//       .then(({ body }) => {
-//         const { endpoints } = body;
-//         expect(endpoints).toEqual(endpointsJson);
-//       });
-//   });
-// });
 
 describe('ERROR Invalid route', () => {
   test('404 - Responds with route not found when url is invalid', () => {
