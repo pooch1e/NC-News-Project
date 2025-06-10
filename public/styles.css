@@ -193,3 +193,8 @@ width: 200px;
   padding: 20px;
 }
 
+
+/* API styling */
+.api-parent > p {
+  padding: 20px;
+}
