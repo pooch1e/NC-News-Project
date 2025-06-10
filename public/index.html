@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+  <title>NC News Docs</title>
+</head>
+<body>
+  <header>
+  <div class="top-bar">
+    <nav>
+      <ul>
+        <li>Home</li>
+        <li>API</li>
+        <li>Github</li>
+        <li>Resources</li>
+      </ul>
+    </nav>
+  </div>
+<section class="title"></section>
+  <div id="title-container">
+
+  <h1>NC News Docs</h1>
+  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto ullam non est officia provident veritatis rem ducimus laborum tenetur repellendus, inventore dolorum optio laboriosam ab voluptas voluptatem excepturi velit deserunt.</p>
+  </div> 
+</section>
+
+</header>
+
+<main>
+<section class="api-nav">
+  <div id="api-nav-container">
+    <h2>API Navigation</h2>
+    <ul>
+        <li><a href="#get-api-topics">GET /api/topics</a> </li>
+        <li><a href="#get-api-articles">GET /api/articles</a></li>
+        <li><a href="#get-api-article-articleid">GET /api/articles/:article_id</a></li>
+        <li><a href="#post-api-articles">POST /api/articles</a></li>
+        <li><a href="#patch-api-articles">PATCH /api/articles/:article_id</a></li>
+        <li><a href="#get-api-users">GET /api/users</a></li>
+        <li><a href="#get-api-users-username">GET /api/users/:username</a></li>
+        <li><a href="#get-api-articles-comments">GET /api/articles/:article_id/comments</a></li>
+        <li><a href="#post-api-articles-comments">POST /api/articles/:article_id/comments</a></li>
+        <li><a href="#patch-api-comment-commentid">PATCH /api/comments/:comment_id</a></li>
+        <li><a href="#delete-api-comment">DELETE /api/comments/:comment_id</a></li>
+    </ul>
+  </div>
+</section>
+<section class="examples">
+  <div id="examples-container">
+    <h2>Examples</h2>
+    <p>example.... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error quasi maiores eos ratione asperiores nisi quo distinctio ipsa molestias voluptatibus! Alias, dolorem excepturi temporibus doloremque eos optio eligendi neque maxime!</p>
+  </div>
+</section>
+
+
+<section class="api-topics">
+  <h2>API ENDPOINTS</h2>
+  <div id="topic-container">
+    <div id="get-api-topics">
+    <details open>
+        <summary>GET /api/topics</summary>
+        <p><strong>Description:</strong> serves an array of all topics</p>
+        <p><strong>Queries:</strong> None</p>
+        <p><strong>Example Response:</strong></p>
+        <pre><code>{
+      "topics": [
+        {
+          "slug": "football",
+          "description": "Footie!"
+        }
+      ]
+    }</code></pre>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="api-articles">
+  <div id="articles-container">
+    <div id="get-api-articles">
+      <details>
+      <summary>GET /api/articles</summary>
+      <p>Description: serves an array of all articles</p>
+      <p>Queries: sort_by, order, topics, limit, p</p>
+      <p>Example Response:</p>
+      <pre><code>{
+    "articles": [
+      {
+        "article_id": "2",
+        "title": "Seafood substitutions are increasing",
+        "topic": "cooking",
+        "author": "weegembump",
+        "created_at": "2018-05-30T15:59:13.341Z",
+        "votes": 0,
+        "article_img_url": "imager.hello_test",
+        "comment_count": 6
+      }
+    ]
+  }</code></pre>
+    </details>
+      </div>
+      <div id="get-api-article-articleid">
+    <details>
+      <summary>GET /api/articles/:article_id</summary>
+      <p>Description: Retrieves a single article by ID with comment count</p>
+      <p>Example Response:</p>
+      <pre><code>{
+      "article": {
+        "article_id": 1,
+        "title": "Example Article Title",
+        "body": "This is the article content...",
+        "votes": 10,
+        "topic": "technology",
+        "author": "johndoe",
+        "created_at": "2023-01-01T12:00:00.000Z",
+        "comment_count": 5,
+        "article_img_url": "https://example.com/image.jpg"
+      }
+      }</code></pre>
+      <p>Error Responses:</p>
+      <pre><code>404 Not Found: { "message": "Article not found" }
+      400 Bad Request: { "message": "Invalid article ID" }</code></pre>
+      <p>Example Usage:</p>
+      <pre><code>fetch('/api/articles/3')
+      .then(response => response.json())
+      .then(data => console.log(data));</code></pre>
+    </details>
+      </div>
+    <div id="post-api-articles">
+      <details>
+        <summary>POST /api/articles</summary>
+        <p>Description: Posts a new article</p>
+        <p>Example Response:</p>
+        <pre><code>{
+        "article": [
+          {
+            "article_id": "17",
+            "title": "How to make proper ramen",
+            "topic": "cooking",
+            "author": "Jiro",
+            "created_at": "2018-05-30T15:59:13.341Z",
+            "votes": 0,
+            "article_img_url": "imager.hello_test",
+            "comment_count": 0
+          }
+        ]
+      }</code></pre>
+      </details>
+    </div>
+    <div id="patch-api-articles">
+      <details>
+        <summary>PATCH /api/articles/:article_id</summary>
+        <p>Description: Updates the vote count of an article by the specified amount.</p>
+        <p>Example Patch:</p>
+        <pre><code>{
+        "inc_votes": 1
+      }</code></pre>
+        <p>Example Response:</p>
+        <pre><code>{
+        "updatedArticle": {
+          "article_id": 2,
+          "title": "Seafood substitutions are increasing",
+          "topic": "cooking",
+          "author": "weegembump",
+          "body": "Text of the article...",
+          "created_at": "2018-05-30T15:59:13.341Z",
+          "votes": 1,
+          "article_img_url": "imager.hello_test"
+        }
+      }</code></pre>
+      </details>
+      </div>
+    </div>
+</section>
+
+<section class="api-users">
+  <div id="users-container">
+    <div id="get-api-users">
+      <details>
+        <summary>GET /api/users</summary>
+        <p>Description: serves an array of all users</p>
+        <p>Example Response:</p>
+        <pre><code>{
+        "users": [
+          {
+            "username": "pookie1",
+            "name": "Blumpf Barton",
+            "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
+          }
+        ]
+      }</code></pre>
+      </details>
+    </div>
+    <div id="get-api-users-username">
+      <details>
+        <summary>GET /api/users/:username</summary>
+        <p>Description: serves an object of user by specified username</p>
+        <p>Example Response:</p>
+        <pre><code>{
+        "user": {
+          "username": "pookie1",
+          "name": "Blumpf Barton",
+          "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
+        }
+      }</code></pre>
+    </details>
+    </div>
+  </div>
+</section>
+<section class="api-comments">
+  <div id="comments-container">
+    <div id="get-api-articles-comments">
+      <details>
+        <summary>GET /api/articles/:article_id/comments</summary>
+        <p>Description: serves an array of all comments for article id</p>
+        <p>Example Response:</p>
+        <pre><code>{
+        "comments": [
+          {
+            "comment_id": "295",
+            "article_id": "3",
+            "body": "this is my best comment ever",
+            "votes": "230",
+            "author": "truble",
+            "created_at": "2020-10-03T18:22:00.000Z",
+            "title": "My smart article"
+          }
+        ]
+      }</code></pre>
+    </details>
+    </div>
+    <div id="post-api-articles-comments">
+      <details>
+        <summary>POST /api/articles/:article_id/comments</summary>
+        <p>Description: posts a comment via article ID</p>
+        <p>Example Request Body:</p>
+        <pre><code>{
+        "username": "username",
+        "body": "body"
+      }</code></pre>
+        <p>Example Response:</p>
+        <pre><code>{
+        "postedComment": [
+          {
+            "comment_id": "13",
+            "article_id": "2",
+            "body": "I love milk",
+            "votes": "-40",
+            "author": "trumpf",
+            "created_at": "2024-10-03T18:22:00.000Z"
+          }
+        ]
+      }</code></pre>
+    </details>
+    </div>
+    <div id="patch-api-comment-commentid">
+      <details>
+        <summary>PATCH /api/comments/:comment_id</summary>
+        <p>Description: Updates the vote count of a comment by the specified amount.</p>
+        <p>Example Request Body:</p>
+        <pre><code>{
+        "inc_votes": 1
+      }</code></pre>
+        <p>Example Response:</p>
+        <pre><code>{
+        "updatedComment": {
+          "comment_id": 2,
+          "article_id": 13,
+          "title": "Seafood substitutions are increasing",
+          "author": "musky",
+          "body": "Text of the comment...",
+          "created_at": "2018-05-30T15:59:13.341Z",
+          "votes": 7
+        }
+      }</code></pre>
+    </details>
+    </div>
+    <div id="delete-api-comment">
+      <details>
+        <summary>DELETE /api/comments/:comment_id</summary>
+        <p>Description: Deletes comment at comment id.</p>
+        <p>Example Response:</p>
+        <pre><code>{
+        "status": "204"
+      }</code></pre>
+    </details>
+    </div>
+  </div>
+</section>
+
+
+  
+</main>
+  
+
+
+
+
+
+  <script src="./index.js"></script>
+</body>
+</html>
