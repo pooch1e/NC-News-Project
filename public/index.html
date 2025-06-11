@@ -43,7 +43,7 @@
     <!-- Left Navigation Panel -->
     <aside class="api-nav">
       <nav id="api-nav-container">
-        <h2>Navigation</h2>
+
         <ul>
           <li><a href="#get-api-topics">TOPICS</a></li>
           <li><a href="#get-api-articles">ARTICLES</a></li>
@@ -64,13 +64,15 @@
           <p>Description: serves an array of all topics</p>
           <p>Queries: None</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
-  "topics": [
-    {
-      "slug": "football",
-      "description": "Footie!"
-    }
-  ]
+          <pre>
+            <code class="language-javascript">{
+              "topics": [
+
+    <span>{</span>
+      <span>"slug": "football",</span>
+      <span>"description": "Footie!"</span>
+    <span>}</span>
+  <span>]</span>
 }</code></pre>
         </details>
       </div>
@@ -87,20 +89,22 @@
           <p>Description: serves an array of all articles</p>
           <p>Queries: sort_by, order, topics, limit, p</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
-  "articles": [
-    {
-      "article_id": "2",
-      "title": "Seafood substitutions are increasing",
-      "topic": "cooking",
-      "author": "weegembump",
-      "created_at": "2018-05-30T15:59:13.341Z",
-      "votes": 0,
-      "article_img_url": "imager.hello_test",
-      "comment_count": 6
-    }
-  ]
-}</code></pre>
+          <pre>
+            <code class="language-javascript">{
+              "articles": [
+
+    <span>{</span>
+      <span>"article_id": "2",</span>
+      <span>"title": "Seafood substitutions are increasing",</span>
+      <span>"topic": "cooking",</span>
+      <span>"author": "weegembump",</span>
+      <span>"created_at": "2018-05-30T15:59:13.341Z",</span>
+      <span>"votes": 0,</span>
+      <span>"article_img_url": "imager.hello_test",</span>
+      <span>"comment_count": 6</span>
+    <span>}</span>
+  <span>]</span>
+<span>}</span></code></pre>
         </details>
       </div>
 
@@ -109,26 +113,28 @@
           <summary>GET /api/articles/:article_id</summary>
           <p>Description: Retrieves a single article by ID with comment count</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
-  "article": {
-    "article_id": 1,
-    "title": "Example Article Title",
-    "body": "This is the article content...",
-    "votes": 10,
-    "topic": "technology",
-    "author": "johndoe",
-    "created_at": "2023-01-01T12:00:00.000Z",
-    "comment_count": 5,
-    "article_img_url": "https://example.com/image.jpg"
-  }
-}</code></pre>
+          <pre>
+            <code class="language-javascript">{
+              "article": {
+    
+    <span>"article_id": 1,</span>
+    <span>"title": "Example Article Title",</span>
+    <span>"body": "This is the article content...",</span>
+    <span>"votes": 10,</span>
+    <span>"topic": "technology",</span>
+    <span>"author": "johndoe",</span>
+    <span>"created_at": "2023-01-01T12:00:00.000Z",</span>
+    <span>"comment_count": 5,</span>
+    <span>"article_img_url": "https://example.com/image.jpg"</span>
+  <span>}</span>
+<span>}</span></code></pre>
           <p>Error Responses:</p>
-          <pre><code>404 Not Found: { "message": "Article not found" }
-400 Bad Request: { "message": "Invalid article ID" }</code></pre>
+          <pre><code><span>404 Not Found: { "message": "Article not found" }</span>
+<span>400 Bad Request: { "message": "Invalid article ID" }</span></code></pre>
           <p>Example Usage:</p>
-          <pre><code>fetch('/api/articles/3')
-  .then(response => response.json())
-  .then(data => console.log(data));</code></pre>
+          <pre><code><span>fetch('/api/articles/3')</span>
+  <span>.then(response => response.json())</span>
+  <span>.then(data => console.log(data));</span></code></pre>
         </details>
       </div>
 
@@ -194,11 +200,11 @@
           <p>Example Response:</p>
           <pre><code class="language-javascript">{
   "users": [
-    {
-      "username": "pookie1",
-      "name": "Blumpf Barton",
-      "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
-    }
+    <span>{</span>
+      <span>"username": "pookie1",</span>
+      <span>"name": "Blumpf Barton",</span>
+      <span>"avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?</span><span>file=Mr_beans_holiday_ver2.jpg"</span>
+    <span>}</span>
   ]
 }</code></pre>
         </details>
@@ -211,9 +217,9 @@
           <p>Example Response:</p>
           <pre><code class="language-javascript">{
   "user": {
-    "username": "pookie1",
-    "name": "Blumpf Barton",
-    "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
+    <span>"username": "pookie1",</span>
+    <span>"name": "Blumpf Barton",</span>
+    <span><span>"avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?</span>file=Mr_beans_holiday_ver2.jpg"</span>
   }
 }</code></pre>
         </details>
@@ -233,14 +239,14 @@
           <p>Example Response:</p>
           <pre><code class="language-javascript">{
   "comments": [
-    {
-      "comment_id": "295",
-      "article_id": "3",
-      "body": "this is my best comment ever",
-      "votes": "230",
-      "author": "truble",
-      "created_at": "2020-10-03T18:22:00.000Z",
-      "title": "My smart article"
+    <span>{</span>
+      <span>"comment_id": "295",</span>
+      <span>"article_id": "3",</span>
+      <span>"body": "this is my best comment ever",</span>
+      <span>"votes": "230",</span>
+      <span>"author": "truble",</span>
+      <span>"created_at": "2020-10-03T18:22:00.000Z",</span>
+      <span>"title": "My smart article"</span>
     }
   ],
   "total_count": 28,
@@ -266,12 +272,12 @@
           <pre><code class="language-javascript">{
   "postedComment": [
     {
-      "comment_id": "13",
-      "article_id": "2",
-      "body": "I love milk",
-      "votes": "-40",
-      "author": "trumpf",
-      "created_at": "2024-10-03T18:22:00.000Z"
+      <span>"comment_id": "13",</span>
+      <span>"article_id": "2",</span>
+      <span>"body": "I love milk",</span>
+      <span>"votes": "-40",</span>
+      <span>"author": "trumpf",</span>
+      <span>"created_at": "2024-10-03T18:22:00.000Z"</span>
     }
   ]
 }</code></pre>
