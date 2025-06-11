@@ -6,6 +6,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" rel="stylesheet" />
+
   <link rel="stylesheet" href="./stylesDemo.css">
   
   <title>NC News Docs</title>
@@ -54,7 +56,6 @@
 
 <section class="docs-content">
   <section class="api-topics">
-    <h2>API ENDPOINTS</h2>
     <div id="topic-container">
       <h3>Topics</h3>
       <div id="get-api-topics">
@@ -63,7 +64,7 @@
           <p>Description: serves an array of all topics</p>
           <p>Queries: None</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "topics": [
     {
       "slug": "football",
@@ -86,7 +87,7 @@
           <p>Description: serves an array of all articles</p>
           <p>Queries: sort_by, order, topics, limit, p</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "articles": [
     {
       "article_id": "2",
@@ -108,7 +109,7 @@
           <summary>GET /api/articles/:article_id</summary>
           <p>Description: Retrieves a single article by ID with comment count</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "article": {
     "article_id": 1,
     "title": "Example Article Title",
@@ -136,7 +137,7 @@
           <summary>POST /api/articles</summary>
           <p>Description: Posts a new article</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "article": [
     {
       "article_id": "17",
@@ -151,7 +152,7 @@
   ]
 }</code></pre>
           <p>Error Responses:</p>
-          <pre><code>400 Bad Request: { "message": "Missing required fields (title, body, author, topic)" }
+          <pre><code class="language-javascript">400 Bad Request: { "message": "Missing required fields (title, body, author, topic)" }
 404 Not Found: { "message": "Author or topic not found" }</code></pre>
         </details>
       </div>
@@ -161,11 +162,11 @@
           <summary>PATCH /api/articles/:article_id</summary>
           <p>Description: Updates the vote count of an article by the specified amount.</p>
           <p>Example Patch:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "inc_votes": 1
 }</code></pre>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "updatedArticle": {
     "article_id": 2,
     "title": "Seafood substitutions are increasing",
@@ -191,7 +192,7 @@
           <summary>GET /api/users</summary>
           <p>Description: serves an array of all users</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "users": [
     {
       "username": "pookie1",
@@ -208,7 +209,7 @@
           <summary>GET /api/users/:username</summary>
           <p>Description: serves an object of user by specified username</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "user": {
     "username": "pookie1",
     "name": "Blumpf Barton",
@@ -230,7 +231,7 @@
           <p>Description: serves an array of all comments for article id</p>
           <p>Queries: limit (default 10), p (page number)</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "comments": [
     {
       "comment_id": "295",
@@ -247,7 +248,7 @@
   "total_pages": 3
 }</code></pre>
           <p>Error Responses:</p>
-          <pre><code>400 Bad Request: { "message": "Invalid limit or page number" }
+          <pre><code class="language-javascript">400 Bad Request: { "message": "Invalid limit or page number" }
 404 Not Found: { "message": "Article not found" }</code></pre>
         </details>
       </div>
@@ -257,12 +258,12 @@
           <summary>POST /api/articles/:article_id/comments</summary>
           <p>Description: posts a comment via article ID</p>
           <p>Example Request Body:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "username": "username",
   "body": "body"
 }</code></pre>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "postedComment": [
     {
       "comment_id": "13",
@@ -275,7 +276,7 @@
   ]
 }</code></pre>
           <p>Error Responses:</p>
-          <pre><code>400 Bad Request: { "message": "Missing required fields (username, body)" }
+          <pre><code class="language-javascript">400 Bad Request: { "message": "Missing required fields (username, body)" }
 404 Not Found: { "message": "Article not found" }</code></pre>
         </details>
       </div>
@@ -285,11 +286,11 @@
           <summary>PATCH /api/comments/:comment_id</summary>
           <p>Description: Updates the vote count of a comment by the specified amount.</p>
           <p>Example Request Body:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "inc_votes": 1
 }</code></pre>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "updatedComment": {
     "comment_id": 2,
     "article_id": 13,
@@ -308,7 +309,7 @@
           <summary>DELETE /api/comments/:comment_id</summary>
           <p>Description: Deletes comment at comment id.</p>
           <p>Example Response:</p>
-          <pre><code>{
+          <pre><code class="language-javascript">{
   "status": "204"
 }</code></pre>
         </details>
@@ -324,6 +325,7 @@
 
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
   <script src="./index.js"></script>
 </body>
 </html>
