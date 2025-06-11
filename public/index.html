@@ -12,45 +12,47 @@
 </head>
 <body>
   <header class="header">
-  <div class="top-bar">
-    <nav>
-      <ul>
-        <li><a href="https://github.com/pooch1e/NC-News-Project" target="_blank">GITHUB</a></li>
-        <li><a href="https://developer.mozilla.org/en-US/" target="_blank">RESOURCES</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+    <div class="top-bar">
+      <nav class="nav-bar">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/pooch1e/NC-News-Project" target="_blank">GITHUB</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://developer.mozilla.org/en-US/" target="_blank">RESOURCES</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 <hr>
 
 <main>
-  <div class="docs-header">
-    <section class="title"> 
+  <header class="docs-header">
+    <section class="title">
       <div id="title-container">
-          <h1>NC News Docs</h1>
-          <p>A robust backend API for a Reddit-style news platform, built with Node.js and Express. This project provides comprehensive article, topic, user, and comment management functionality.</p>
-      </div> 
+        <h1>NC News Docs</h1>
+        <p>A robust backend API for a Reddit-style news platform, built with Node.js and Express. This project provides comprehensive article, topic, user, and comment management functionality.</p>
+      </div>
     </section>
-  </div>
-  <div class="docs-container">
-    <div class="docs-content">
-      <section class="api-nav">
-        <div id="api-nav-container">
-          <nav>
-            <h2></h2>
-            <ul>
-                <li><a href="#get-api-topics">TOPICS</a> </li>
-                <li><a href="#get-api-articles">ARTICLES</a></li>
-                <li><a href="#get-api-users">USERS</a></li>
-                <li><a href="#get-api-articles-comments">COMMENTS</a></li>
+  </header>
 
-            </ul>
-          </nav>
-        </div>
-      </section>
+  <div class="docs-layout">
+    <!-- Left Navigation Panel -->
+    <aside class="api-nav">
+      <nav id="api-nav-container">
+        <h2>Navigation</h2>
+        <ul>
+          <li><a href="#get-api-topics">TOPICS</a></li>
+          <li><a href="#get-api-articles">ARTICLES</a></li>
+          <li><a href="#get-api-users">USERS</a></li>
+          <li><a href="#get-api-articles-comments">COMMENTS</a></li>
+        </ul>
+      </nav>
+    </aside>
 
 
-<section class="api-parent">
+<section class="docs-content">≈
 <section class="api-topics">
   <h2>API ENDPOINTS</h2>
   <div id="topic-container">
@@ -310,9 +312,6 @@
 </section>
 </section>
 </div>
-<!-- <div class="docs-content-right">
-  <img src="./assets/reddit_clone.png" alt="kawaii icon of star acting as placeholder for reddit clone image">
-</div> -->
 </div>
 
 
