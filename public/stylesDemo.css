@@ -1,0 +1,39 @@
+set up variables
+
+/* TODO */
+/* 1. fix side navbar
+2. fix grid
+3. fix styling on api docs
+4. improve overall */
+
+
+:root {
+  /* copied from Twilio */
+  --fbc-blue-60: #0060df;
+  --fbc-blue-70: #003eaa;
+  --fbc-gray-20: #ededf0;
+  --fbc-light-gray: #F0F0F4;
+  --fbc-white: #ffffff;
+  --fbc-borders: 1px solid #ededf0;
+  --fbc-primary-text: #15141A;
+  --fbc-secondary-text: #5B5B66;
+  --fbc-font-size: 24px;
+
+  /* code */
+  --color-code-background: #272822;
+  --color-code-color: #f8f8f2;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  max-width: 100vw;
+
+}
+
