@@ -1,237 +1,295 @@
-# NC-News-Project - Backend API
+# NC News Backend API
 
-![Node.js](https://img.shields.io/badge/Node.js-v18%2B-green)
-![Express](https://img.shields.io/badge/Express-v4-blue)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-orange)
-![Jest](https://img.shields.io/badge/Jest-v29-purple)
+[![Node.js](https://img.shields.io/badge/Node.js-v18+-green.svg)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.x-blue.svg)](https://expressjs.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-blue.svg)](https://www.postgresql.org/)
+[![Jest](https://img.shields.io/badge/Jest-Testing-red.svg)](https://jestjs.io/)
 
-A robust backend API for a Reddit-style news platform, built with Node.js and Express. This project provides comprehensive article, topic, user, and comment management functionality.
+A robust RESTful backend API for a Reddit-style news platform, built with Node.js, Express, and PostgreSQL. This project provides comprehensive article, topic, user, and comment management functionality with full CRUD operations.
 
-Hosted at : https://nc-news-api-qa14.onrender.com/
-Please note - as I am currently hosting on the free version of Render, the application can take a minute to build the server. I'll soon be switching to Vercell.
+## 🌐 Live Demo
 
-Public Repo: https://github.com/pooch1e/NC-News-Project
+**Hosted API:** [https://nc-news-api-qa14.onrender.com/](https://nc-news-api-qa14.onrender.com/)
 
-## Table of Contents
+> **Note:** Currently hosted on Render's free tier, so initial requests may take ~1 minute to spin up the server. Migration to Vercel planned for improved performance.
+
+**Public Repository:** [https://github.com/pooch1e/NC-News-Project](https://github.com/pooch1e/NC-News-Project)
+
+## 📋 Table of Contents
 
 - [Features](#features)
+- [Database Schema](#database-schema)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Database Setup](#database-setup)
-- [Configuration](#configuration)
 - [API Documentation](#api-documentation)
 - [Development](#development)
-  - [Running the Server](#running-the-server)
-  - [Testing](#testing)
+- [Testing](#testing)
 - [Deployment](#deployment)
-- [ToDo](#toDo)
+- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
 
-## Features
+## ✨ Features
 
-- **Complete CRUD Operations**:
-  - Create, read, update, and delete articles, comments, users, and topics
-  - Filtering by topic, author, and date
-  - Sorting by votes, comments, date, author, comment count and title
-- **Error Handling**:
-  - Comprehensive status codes
-  - Custom error handling
-- **Testing**:
-  - Endpoint test coverage
-  - Unit and integration tests
+### Core Functionality
+- **Complete CRUD Operations** for articles, comments, users, and topics
+- **Advanced Filtering** by topic, author, and date ranges
+- **Flexible Sorting** by votes, comment count, creation date, author, and title
+- **Robust Error Handling** with comprehensive HTTP status codes
+- **Data Validation** and sanitization for all inputs
 
-## Project Structure
+### Technical Features
+- RESTful API design principles
+- PostgreSQL database with optimized queries
+- Comprehensive test coverage with Jest
+- Environment-based configuration
+- Custom error handling middleware
+- CORS support for cross-origin requests
 
-nc-news-project/
+## 🗄️ #Database Schema
 
-```bash
-nc-news-project/
-Root
-│   ├── controllers/       # Route controllers
-│   ├── db/                # Database connection and setup
-│   ├── models/            # Data models
-│   ├── routes/            # API route definitions COMING
-│   |── errors/            # Error handling util functions
-│   └── app.js             # Express application setup
-├── tests/                 # Test suites
-├── .env.example           # Environment variables template
-├── endpoints.json         # directory of endpoints and exmamples
-└── package.json           # Project dependencies
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────────┐
+│   topics    │         │    users    │         │    articles     │
+├─────────────┤         ├─────────────┤         ├─────────────────┤
+│ slug (PK)   │◄────┐   │ username    │◄────┐   │ article_id (PK) │
+│ description │     │   │ name        │     │   │ title           │
+│ img_url     │     │   │ avatar_url  │     │   │ topic (FK)      │
+└─────────────┘     │   └─────────────┘     │   │ author (FK)     │
+                    │                       │   │ body            │
+                    │                       │   │ created_at      │
+                    │                       │   │ votes           │
+                    │                       │   │ article_img_url │
+                    │                       │   └─────────────────┘
+                    │                       │            │
+                    │                       │            │
+┌─────────────────┐ │                       │   ┌────────▼────────┐
+│  user_topics    │ │                       │   │    comments     │
+├─────────────────┤ │                       │   ├─────────────────┤
+│ user_topic_id   │ │                       └───┤ comment_id (PK) │
+│ username (FK)   ├─┘                           │ article_id (FK) │
+│ topic (FK)      ├─────────────────────────────┤ author (FK)     │
+└─────────────────┘                             │ body            │
+                                                │ votes           │
+                                                │ created_at      │
+                                                └─────────────────┘
 ```
 
-## Getting Started
+## 📁 Project Structure
+
+```
+nc-news-project/
+├── controllers/           # Route controllers and business logic
+│   ├── articles.js
+│   ├── comments.js
+│   ├── topics.js
+│   └── users.js
+├── db/                   # Database connection and setup
+│   ├── connection.js
+│   ├── seeds/
+│   └── data/
+├── models/               # Data models and database queries
+│   ├── articles.model.js
+│   ├── comments.model.js
+│   ├── topics.model.js
+│   └── users.model.js
+├── errors/               # Error handling utilities
+│   └── index.js
+├── __tests__/            # Test suites
+│   ├── app.test.js
+│   └── utils.test.js
+├── app.js                # Express application setup
+├── listen.js             # Server startup
+├── endpoints.json        # API endpoint documentation
+├── .env.example          # Environment variables template
+└── package.json          # Project dependencies
+```
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js v18+
-- PostgreSQL v15+
-- Yarn (recommended) or npm
+Ensure you have the following installed:
+- **Node.js** v18.0.0 or higher
+- **PostgreSQL** v15.0.0 or higher
+- **npm** or **yarn** package manager
 
 ### Installation
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/NC-News-Project.git
+   git clone https://github.com/pooch1e/NC-News-Project.git
    cd NC-News-Project
    ```
 
-Install dependencies:
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+### Database Setup
+
+1. **Create local databases:**
+   ```bash
+   createdb your_db_name
+   createdb test_db_name
+   ```
+
+2. **Set up environment files:**
+   
+   Create two environment files in the root directory:
+
+   **`.env.development`**
+   ```
+   PGDATABASE=your_db_name
+   ```
+
+   **`.env.test`**
+   ```
+   PGDATABASE=test_db_name
+   ```
+
+   > **Important:** These files are gitignored and should not be committed to version control.
+
+3. **Seed the database:**
+   ```bash
+   npm run seed
+   # or
+   yarn run seed
+   ```
+
+## 📖 API Documentation
+
+### Base URL
+```
+https://nc-news-api-qa14.onrender.com/api
+```
+
+### Available Endpoints
+
+For complete API documentation with request/response examples, please refer to the `endpoints.json` file or visit the hosted API root endpoint.
+
+**Quick Reference:**
+- `GET /api` - API information and available endpoints
+- `GET /api/topics` - Get all topics
+- `GET /api/articles` - Get all articles (with filtering and sorting)
+- `GET /api/articles/:article_id` - Get article by ID
+- `GET /api/articles/:article_id/comments` - Get comments for an article
+- `POST /api/articles/:article_id/comments` - Add comment to article
+- `PATCH /api/articles/:article_id` - Update article votes
+- `DELETE /api/comments/:comment_id` - Delete a comment
+- `GET /api/users` - Get all users
+
+## 🛠️ Development
+
+### Running the Development Server
 
 ```bash
-yarn install
-```
-
-```js
-npm install
-```
-
-# Database Setup
-
-DB SCHEMA
-
-    +------------+           +-----------+            +-----------------+
-    |  topics    |           |   users   |            |     articles    |
-    +------------+           +-----------+            +-----------------+
-    | slug (PK)  |<--+       | username  |<-----+     | article_id (PK) |
-    | desc       |   |       | name      |      |     | title           |
-    | img_url    |   |       | avatar    |      |     | topic (FK)      +
-    +------------+   |       +-----------+      |     | author (FK)     +
-                     |                          |     | body            |
-                     |                          |     | created_at      |
-                     |                          |     | votes           |
-                     |                          |     | article_img_url |
-                     |                          |     +-----------------+
-                     |                          |
-                     |                          |
-                     |                          |     +------------------+
-                     |                          |     |   comments       |
-                     |                          |     +----------------- +
-                     |                          +-----| comment_id (PK)  |
-                     +--------------------------------| article_id (FK)  +
-                                                    +-| author (FK)      +
-                                                      | body             |
-                                                      | votes            |
-                                                      | created_at       |
-                                                      +------------------+
-
-                             +-------------------+
-                             |   user_topics     |
-                             +-------------------+
-                             | user_topic_id (PK)|
-                             | username (FK)     |
-                             | topic (FK)        |
-                             +-------------------+
-
-## Setup: Environment Files
-
-Run `npm install` to install dependencies, which includes dotenv
-The connections file has been set up for you
-
-To connect to your local databases, you need to create two environment files in the root directory:
-
-- `.env.development`
-- `.env.test`
-
-Each file should contain a single line specifying the relevant database name. For example:
-
-**.env.development**
-
-```
-PGDATABASE=dev_database_name
-```
-
-**.env.test**
-
-```
-PGDATABASE=test_database_name
-```
-
-Ensure you replace these names with your database names.
-
-Make sure these files are **not** committed to version control (they are already included in `.gitignore`).
-
-You will also need to ensure your PostgreSQL server is running and that both databases exist locally.
-
-Run migrations:
-
-```bash
-yarn run seed
-```
-
-Configuration
-
-# API Documentation
-
-For complete API documentation, please refer to the API Reference or run the server.
-
-# Development
-
-Running the Server
-Start the development server:
-
-```bash
+npm run dev
+# or
 yarn dev
 ```
 
-# or
+The server will start on `http://localhost:9090` by default.
 
-```js
-npm run dev
-```
-
-Testing
-Run the test suite:
+### Available Scripts
 
 ```bash
-yarn test
+npm run setup-dbs    # Set up local databases
+npm run seed         # Seed database with sample data
+npm run dev          # Start development server with nodemon
+npm start            # Start production server
+npm test             # Run test suite
 ```
 
-# or
+## 🧪 Testing
 
-Ensure Jest is installed
+This project uses Jest for comprehensive testing including unit tests, integration tests, and endpoint testing.
 
-```js
+```bash
+# Run all tests
 npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
 ```
 
-# Deployment
+### Test Coverage
+- Endpoint testing for all API routes
+- Error handling validation
+- Database model testing
+- Utility function testing
 
-This application can be deployed to any Node.js hosting platform.
-For production:
-Set NODE_ENV=production in your environment variables
-Ensure proper database connection strings
+## 🚢 Deployment
 
-# ToDo
+### Environment Variables
 
-1. Finish pagination with page count
-2. Add pagination to comments
-3. Add post for topics
-4. Add delete for articles
+For production deployment, ensure the following environment variables are set:
 
-# Contributing
+```bash
+NODE_ENV=production
+DATABASE_URL=your_production_database_url
+PORT=your_preferred_port
+```
 
-Contributions are welcome and feedback would be amazing! Please follow these steps:
-Fork the repository
-Create a new feature branch
-Commit your changes
-Push to the branch
-Submit a pull request
+### Hosting Platforms
 
-# Acknowledgements
+This application is compatible with:
+- Render (currently used)
+- Vercel (planned migration)
+- Any Node.js hosting platform
 
-Thank you to the NC team, Rose, Stephen, Mezz and Alex.
-Thank you to Simon for the music.
+## 🗺️ Roadmap
 
-# License
+### Planned Features
+- [ ] Complete pagination implementation with page count
+- [ ] Add pagination support for comments
+- [ ] POST endpoint for creating new topics
+- [ ] DELETE endpoint for articles
+- [ ] Rate limiting and API authentication
+- [ ] Enhanced search functionality
+- [ ] Real-time notifications
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Improvements
+- [ ] Migration to Vercel for better performance
+- [ ] Add Postman/Swagger documentation
+- [ ] Implement caching strategies
 
-Possible to add....
+## 🤝 Contributing
 
-- Adding actual API documentation
-- Add screenshots
-- Listing known issues
+Contributions are welcome and feedback is greatly appreciated! To contribute:
+
+1. **Fork** the repository
+2. **Create** a new feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add some amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### Development Guidelines
+- Follow existing code style and conventions
+- Write tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting PR
+
+## 🙏 Acknowledgements
+
+Special thanks to:
+- **Northcoders Team:** Rose, Stephen, Mezz, and Alex for their guidance and support
+- **Simon** for providing the soundtrack to development
+- The open-source community for the excellent tools and libraries
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Built with ❤️ by [pooch1e](https://github.com/pooch1e)**
+
+For questions, suggestions, or collaboration opportunities, feel free to reach out!
