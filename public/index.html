@@ -56,28 +56,31 @@
 
 <section class="docs-content">
   <section class="api-topics">
-    <div id="topic-container">
-      <h3>Topics</h3>
-      <div id="get-api-topics">
-        <details open>
-          <summary>GET /api/topics</summary>
-          <p>Description: serves an array of all topics</p>
-          <p>Queries: None</p>
-          <p>Example Response:</p>
-          <pre>
-            <code class="language-javascript">{
-              "topics": [
-
-    <span>{</span>
-      <span>"slug": "football",</span>
-      <span>"description": "Footie!"</span>
-    <span>}</span>
-  <span>]</span>
+        <div id="topic-container">
+            <h3>API Topics</h3>
+            <div id="get-api-topics">
+                <details open>
+                    <summary>
+                        <span class="method-badge">GET</span>
+                        <span class="endpoint">/api/topics</span>
+                    </summary>
+                    <div class="details-content">
+                        <p><strong>Description:</strong> Serves an array of all topics</p>
+                        <p><strong>Queries:</strong> None</p>
+                        <p><strong>Example Response:</strong></p>
+                        <pre><code>{
+  "topics": [
+    {
+      "slug": "football",
+      "description": "Footie!"
+    }
+  ]
 }</code></pre>
-        </details>
-      </div>
-    </div>
-  </section>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
 
   <section class="api-articles">
     <div id="articles-container">
@@ -90,60 +93,60 @@
           <p>Queries: sort_by, order, topics, limit, p</p>
           <p>Example Response:</p>
           <pre>
-            <code class="language-javascript">{
+            <code>{
               "articles": [
 
-    <span>{</span>
-      <span>"article_id": "2",</span>
-      <span>"title": "Seafood substitutions are increasing",</span>
-      <span>"topic": "cooking",</span>
-      <span>"author": "weegembump",</span>
-      <span>"created_at": "2018-05-30T15:59:13.341Z",</span>
-      <span>"votes": 0,</span>
-      <span>"article_img_url": "imager.hello_test",</span>
-      <span>"comment_count": 6</span>
-    <span>}</span>
-  <span>]</span>
-<span>}</span></code></pre>
-        </details>
+    {
+      "article_id": "2",
+      "title": "Seafood substitutions are increasing",
+      "topic": "cooking",
+      "author": "weegembump",
+      "created_at": "2018-05-30T15:59:13.341Z",
+      "votes": 0,
+      "article_img_url": "imager.hello_test",
+      "comment_count": 6
+    }
+  ]
+}</code></pre>
+        </details open>
       </div>
 
       <div id="get-api-article-articleid">
-        <details>
+        <details open>
           <summary>GET /api/articles/:article_id</summary>
           <p>Description: Retrieves a single article by ID with comment count</p>
           <p>Example Response:</p>
           <pre>
-            <code class="language-javascript">{
+            <code>{
               "article": {
     
-    <span>"article_id": 1,</span>
-    <span>"title": "Example Article Title",</span>
-    <span>"body": "This is the article content...",</span>
-    <span>"votes": 10,</span>
-    <span>"topic": "technology",</span>
-    <span>"author": "johndoe",</span>
-    <span>"created_at": "2023-01-01T12:00:00.000Z",</span>
-    <span>"comment_count": 5,</span>
-    <span>"article_img_url": "https://example.com/image.jpg"</span>
-  <span>}</span>
-<span>}</span></code></pre>
+    "article_id": 1,
+    "title": "Example Article Title",
+    "body": "This is the article content...",
+    "votes": 10,
+    "topic": "technology",
+    "author": "johndoe",
+    "created_at": "2023-01-01T12:00:00.000Z",
+    "comment_count": 5,
+    "article_img_url": "https://example.com/image.jpg"
+  }
+}</code></pre>
           <p>Error Responses:</p>
-          <pre><code><span>404 Not Found: { "message": "Article not found" }</span>
-<span>400 Bad Request: { "message": "Invalid article ID" }</span></code></pre>
+          <pre><code>404 Not Found: { "message": "Article not found" }
+400 Bad Request: { "message": "Invalid article ID" }</code></pre>
           <p>Example Usage:</p>
-          <pre><code><span>fetch('/api/articles/3')</span>
-  <span>.then(response => response.json())</span>
-  <span>.then(data => console.log(data));</span></code></pre>
+          <pre><code>fetch('/api/articles/3')
+  .then(response => response.json())
+  .then(data => console.log(data));</code></pre>
         </details>
       </div>
 
       <div id="post-api-articles">
-        <details>
+        <details open>
           <summary>POST /api/articles</summary>
           <p>Description: Posts a new article</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "article": [
     {
       "article_id": "17",
@@ -158,21 +161,21 @@
   ]
 }</code></pre>
           <p>Error Responses:</p>
-          <pre><code class="language-javascript">400 Bad Request: { "message": "Missing required fields (title, body, author, topic)" }
+          <pre><code>400 Bad Request: { "message": "Missing required fields (title, body, author, topic)" }
 404 Not Found: { "message": "Author or topic not found" }</code></pre>
         </details>
       </div>
 
       <div id="patch-api-articles">
-        <details>
+        <details open>
           <summary>PATCH /api/articles/:article_id</summary>
           <p>Description: Updates the vote count of an article by the specified amount.</p>
           <p>Example Patch:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "inc_votes": 1
 }</code></pre>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "updatedArticle": {
     "article_id": 2,
     "title": "Seafood substitutions are increasing",
@@ -198,28 +201,28 @@
           <summary>GET /api/users</summary>
           <p>Description: serves an array of all users</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "users": [
-    <span>{</span>
-      <span>"username": "pookie1",</span>
-      <span>"name": "Blumpf Barton",</span>
-      <span>"avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?</span><span>file=Mr_beans_holiday_ver2.jpg"</span>
-    <span>}</span>
+    {
+      "username": "pookie1",
+      "name": "Blumpf Barton",
+      "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
+    }
   ]
 }</code></pre>
         </details>
       </div>
 
       <div id="get-api-users-username">
-        <details>
+        <details open>
           <summary>GET /api/users/:username</summary>
           <p>Description: serves an object of user by specified username</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "user": {
-    <span>"username": "pookie1",</span>
-    <span>"name": "Blumpf Barton",</span>
-    <span><span>"avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?</span>file=Mr_beans_holiday_ver2.jpg"</span>
+    "username": "pookie1",
+    "name": "Blumpf Barton",
+    "avatar_url": "https://mrbean.fandom.com/wiki/Mr._Bean_Wiki?file=Mr_beans_holiday_ver2.jpg"
   }
 }</code></pre>
         </details>
@@ -237,16 +240,16 @@
           <p>Description: serves an array of all comments for article id</p>
           <p>Queries: limit (default 10), p (page number)</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "comments": [
-    <span>{</span>
-      <span>"comment_id": "295",</span>
-      <span>"article_id": "3",</span>
-      <span>"body": "this is my best comment ever",</span>
-      <span>"votes": "230",</span>
-      <span>"author": "truble",</span>
-      <span>"created_at": "2020-10-03T18:22:00.000Z",</span>
-      <span>"title": "My smart article"</span>
+    {
+      "comment_id": "295",
+      "article_id": "3",
+      "body": "this is my best comment ever",
+      "votes": "230",
+      "author": "truble",
+      "created_at": "2020-10-03T18:22:00.000Z",
+      "title": "My smart article"
     }
   ],
   "total_count": 28,
@@ -254,49 +257,49 @@
   "total_pages": 3
 }</code></pre>
           <p>Error Responses:</p>
-          <pre><code class="language-javascript">400 Bad Request: { "message": "Invalid limit or page number" }
+          <pre><code>400 Bad Request: { "message": "Invalid limit or page number" }
 404 Not Found: { "message": "Article not found" }</code></pre>
         </details>
       </div>
 
       <div id="post-api-articles-comments">
-        <details>
+        <details open>
           <summary>POST /api/articles/:article_id/comments</summary>
           <p>Description: posts a comment via article ID</p>
           <p>Example Request Body:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "username": "username",
   "body": "body"
 }</code></pre>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "postedComment": [
     {
-      <span>"comment_id": "13",</span>
-      <span>"article_id": "2",</span>
-      <span>"body": "I love milk",</span>
-      <span>"votes": "-40",</span>
-      <span>"author": "trumpf",</span>
-      <span>"created_at": "2024-10-03T18:22:00.000Z"</span>
+      "comment_id": "13",
+      "article_id": "2",
+      "body": "I love milk",
+      "votes": "-40",
+      "author": "trumpf",
+      "created_at": "2024-10-03T18:22:00.000Z"
     }
   ]
 }</code></pre>
           <p>Error Responses:</p>
-          <pre><code class="language-javascript">400 Bad Request: { "message": "Missing required fields (username, body)" }
+          <pre><code>400 Bad Request: { "message": "Missing required fields (username, body)" }
 404 Not Found: { "message": "Article not found" }</code></pre>
         </details>
       </div>
 
       <div id="patch-api-comment-commentid">
-        <details>
+        <details open>
           <summary>PATCH /api/comments/:comment_id</summary>
           <p>Description: Updates the vote count of a comment by the specified amount.</p>
           <p>Example Request Body:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "inc_votes": 1
 }</code></pre>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code>{
   "updatedComment": {
     "comment_id": 2,
     "article_id": 13,
@@ -311,11 +314,11 @@
       </div>
 
       <div id="delete-api-comment">
-        <details>
+        <details open>
           <summary>DELETE /api/comments/:comment_id</summary>
           <p>Description: Deletes comment at comment id.</p>
           <p>Example Response:</p>
-          <pre><code class="language-javascript">{
+          <pre><code >{
   "status": "204"
 }</code></pre>
         </details>
@@ -331,7 +334,7 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+
   <script src="./index.js"></script>
 </body>
 </html>

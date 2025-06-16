@@ -31,6 +31,7 @@ set up variables
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* border: 1px solid red; */
 
 }
 
@@ -167,7 +168,7 @@ html body {
 }
 
 .docs-content > section {
-  background-color: #fff;
+  background-color: var(--color-code-background);
   padding: 2rem;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
@@ -178,70 +179,148 @@ html body {
   justify-content: center;
 }
 
-.docs-content > section:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-details {
-  background-color: #fafafa;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
-summary {
-  background-color: #666;
-  color: white;
-  padding: 1rem 1.5rem;
-  font-weight: 600;
-  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.2s ease;
-}
-
-summary:hover {
-  background-color: #555;
-}
 
 
 
-details p {
-  margin: 0;
-  padding: 0.75rem 1.5rem;
-  color: #374151;
-  line-height: 1.6;
-}
+/* claude  */
+.api-topics {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px 0;
+        }
 
-details p:first-of-type {
-  padding-top: 1.25rem;
-}
+        #topic-container {
+            padding: 24px;
+        }
 
-details p:last-of-type {
-  padding-bottom: 1.25rem;
-}
+        h3 {
+            margin: 0 0 24px 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
 
-/* Style different types of info */
-details p:first-of-type {
-  font-style: italic;
-  color: #6b7280;
-}
+        #get-api-topics {
+            margin-bottom: 20px;
+        }
 
-details p:nth-of-type(2) {
-  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-  font-size: 0.9em;
-  background-color: #f5f5f5;
-  margin: 0 1.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-}
+        details {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
 
-details p:nth-of-type(3) {
-  font-weight: 600;
-  color: #1f2937;
-}
+        details:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-/* test api section */
+        details[open] {
+            border-color: #3b82f6;
+        }
+
+        summary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 16px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            user-select: none;
+            transition: background 0.2s ease;
+            position: relative;
+        }
+
+        summary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        }
+
+        summary::marker {
+            display: none;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+
+        details[open] summary::after {
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        .details-content {
+            padding: 20px;
+            background: #fafbfc;
+        }
+
+        .details-content p {
+            margin: 0 0 16px 0;
+            font-size: 14px;
+        }
+
+        .details-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        strong {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 16px 0 0 0;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        .method-badge {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .endpoint {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            #topic-container {
+                padding: 16px;
+            }
+            
+            summary {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            
+            .details-content {
+                padding: 16px;
+            }
+        }
 
 
 
