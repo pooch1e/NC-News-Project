@@ -11,7 +11,7 @@ A robust RESTful backend API for a Reddit-style news platform, built with Node.j
 
 **Hosted API:** [https://nc-news-api-qa14.onrender.com/](https://nc-news-api-qa14.onrender.com/)
 
-> **Note:** Currently hosted on Render's free tier, so initial requests may take ~1 minute to spin up the server. Migration to Vercel planned for improved performance.
+> **Note:** Currently hosted on Render's free tier, so initial requests may take ~1 minute to spin up the server. Migration planned for improved performance.
 
 **Public Repository:** [https://github.com/pooch1e/NC-News-Project](https://github.com/pooch1e/NC-News-Project)
 
