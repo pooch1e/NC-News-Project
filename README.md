@@ -33,6 +33,7 @@ A robust RESTful backend API for a Reddit-style news platform, built with Node.j
 ## ✨ Features
 
 ### Core Functionality
+
 - **Complete CRUD Operations** for articles, comments, users, and topics
 - **Advanced Filtering** by topic, author, and date ranges
 - **Flexible Sorting** by votes, comment count, creation date, author, and title
@@ -40,6 +41,7 @@ A robust RESTful backend API for a Reddit-style news platform, built with Node.j
 - **Data Validation** and sanitization for all inputs
 
 ### Technical Features
+
 - RESTful API design principles
 - PostgreSQL database with optimized queries
 - Comprehensive test coverage with Jest
@@ -111,6 +113,7 @@ nc-news-project/
 ### Prerequisites
 
 Ensure you have the following installed:
+
 - **Node.js** v18.0.0 or higher
 - **PostgreSQL** v15.0.0 or higher
 - **npm** or **yarn** package manager
@@ -118,6 +121,7 @@ Ensure you have the following installed:
 ### Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/pooch1e/NC-News-Project.git
    cd NC-News-Project
@@ -133,21 +137,24 @@ Ensure you have the following installed:
 ### Database Setup
 
 1. **Create local databases:**
+
    ```bash
    createdb your_db_name
    createdb test_db_name
    ```
 
 2. **Set up environment files:**
-   
+
    Create two environment files in the root directory:
 
    **`.env.development`**
+
    ```
    PGDATABASE=your_db_name
    ```
 
    **`.env.test`**
+
    ```
    PGDATABASE=test_db_name
    ```
@@ -164,6 +171,7 @@ Ensure you have the following installed:
 ## 📖 API Documentation
 
 ### Base URL
+
 ```
 https://nc-news-api-qa14.onrender.com/api
 ```
@@ -173,6 +181,7 @@ https://nc-news-api-qa14.onrender.com/api
 For complete API documentation with request/response examples, please refer to the `endpoints.json` file or visit the hosted API root endpoint.
 
 **Quick Reference:**
+
 - `GET /api` - API information and available endpoints
 - `GET /api/topics` - Get all topics
 - `GET /api/articles` - Get all articles (with filtering and sorting)
@@ -221,6 +230,7 @@ npm run test:coverage
 ```
 
 ### Test Coverage
+
 - Endpoint testing for all API routes
 - Error handling validation
 - Database model testing
@@ -241,6 +251,7 @@ PORT=your_preferred_port
 ### Hosting Platforms
 
 This application is compatible with:
+
 - Render (currently used)
 - Vercel (planned migration)
 - Any Node.js hosting platform
@@ -248,6 +259,7 @@ This application is compatible with:
 ## 🗺️ Roadmap
 
 ### Planned Features
+
 - [ ] Complete pagination implementation with page count
 - [ ] Add pagination support for comments
 - [ ] POST endpoint for creating new topics
@@ -257,6 +269,7 @@ This application is compatible with:
 - [ ] Real-time notifications
 
 ### Improvements
+
 - [ ] Migration to Vercel for better performance
 - [ ] Add Postman/Swagger documentation
 - [ ] Implement caching strategies
@@ -272,6 +285,7 @@ Contributions are welcome and feedback is greatly appreciated! To contribute:
 5. **Open** a Pull Request
 
 ### Development Guidelines
+
 - Follow existing code style and conventions
 - Write tests for new features
 - Update documentation as needed
@@ -280,6 +294,7 @@ Contributions are welcome and feedback is greatly appreciated! To contribute:
 ## 🙏 Acknowledgements
 
 Special thanks to:
+
 - **Northcoders Team:** Rose, Stephen, Mezz, and Alex for their guidance and support
 - **Simon** for providing the soundtrack to development
 - The open-source community for the excellent tools and libraries

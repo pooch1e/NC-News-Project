@@ -1,6 +1,10 @@
 // app.js
+const cors = require('cors')
 const express = require('express');
 const app = express();
+
+//use cors
+app.use(cors());
 
 // parse JSON
 app.use(express.json());
