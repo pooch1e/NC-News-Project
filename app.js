@@ -4,12 +4,16 @@ const app = express();
 
 // parse JSON
 app.use(express.json());
-// serve HTML page
-app.use('/', express.static('public'));
 
 // import Routers
 const apiRouter = require('./routes/apiRouter');
 app.use('/api', apiRouter);
+
+
+// serve HTML page
+app.use('/', express.static('public'));
+
+
 
 // import error handling
 const {
